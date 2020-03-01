@@ -127,3 +127,13 @@ mixin scope(name)
 mixin lzimg(src)
   img.ldlz(data-src=src,
   src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAQAICRAEAOw==")&attributes(attributes)
+//- module
+mixin img(opt)
+  if ctrl && ctrl.sprite
+    div(
+    class=`${opt.name || 'sprite'}`,
+    data-name=opt.src,
+    )&attributes(attributes)
+  else
+    img(src=opt.src)&attributes(attributes)
+

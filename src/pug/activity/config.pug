@@ -1,0 +1,84 @@
+//- pug
+
+style(type="text/css"): :stylus
+  .switch
+    cursor: pointer
+    border: 1px solid #ccc
+    padding: 1px
+    border-radius: 1.75em
+    width: 3.25em
+    background: #edeeef
+  .switch:after
+    content: " "
+    display: block
+    border-radius: 50%
+    box-shadow: 0 2px 4px rgba(0,0,0,.2)
+    width: 1.75em
+    height: 1.75em
+    background: #fff
+  .switch.on
+    background: #00ff7b
+  .switch.on:after
+    margin-left: auto
+
+.card.mb-4.shadow-sm: .card-body: .p-4
+  ul.nav.nav-tabs.mb-4(ld="nav")
+    li.nav-item(ld-each="period"): a.nav-link
+
+    //-
+      li.nav-item: a.nav-link.active 預設
+      li.nav-item: a.nav-link 提案期
+      li.nav-item: a.nav-link 審查期
+      li.nav-item: a.nav-link 決選發表
+    li.nav-item.flex-grow-1.text-right: a.nav-link.text-muted.border-0 新增 +
+  .alert.alert-light.border(ld="default") 你可以為這個活動建立不同的階段，並為這些階段設定起迄時間；而當時間在任何階段以外的時候，活動將會套用此處的預設值。
+  .d-none(ld="custom"): .row.mt-2.mb-4
+    .col-md
+      label 起始時段
+      .d-flex
+        .input-group
+          input.form-control(ld="start time",type="date")
+    .col-md
+      label 結束時段
+      .d-flex
+        .input-group
+          input.form-control(ld="end time",type="date")
+
+  mixin config-sm(name)
+    .form-group.mr-2.flex-grow-1
+      label #{name}
+      .btn-group.d-block.d-flex
+        .btn.btn-outline-secondary ON
+        .btn.btn-outline-secondary OFF
+  mixin config(name,desc)
+    .d-flex.mb-2.pt-2.align-items-center.border-top.border-light
+      .flex-grow-1
+        label.mb-0 #{name}
+        .text-sm.text-muted #{desc}
+      .ml-2
+        .switch(ld="switch",data-name=name)
+
+  .row.form
+    .col-md
+      +config("活動公開", "一般人都可以看到這個活動")
+      +config("提案功能", "註冊使用者可以自由提案")
+      +config("評論功能", "註冊使用者可以針對不同提案進行評論")
+    .col-md
+      +config("修改提案", "提案人可以修改自己的提案")
+      +config("修改評論", "留言用戶可以修改自己的評論")
+      +config("評審功能", "被標註為評審的使用者可以針對提案進行評論")
+  .d-flex.mt-4
+    .flex-grow-1: .btn.btn-outline-danger(ld="delete") 刪除
+    .d-none(ld="custom"): .d-flex.align-items-center
+      span.mr-2 階段名稱
+      div: input.form-control(ld="name")
+
+
+
+  //-.d-flex
+    +config("活動公開", "一般人都可以看到這個活動")
+    +config("提案功能", "註冊使用者可以自由提案")
+    +config("評論功能", "註冊使用者可以針對不同提案進行評論")
+    +config("修改提案", "提案人可以修改自己的提案")
+    +config("修改評論", "留言用戶可以修改自己的評論")
+    +config("評審功能", "被標註為評審的使用者可以針對提案進行評論")

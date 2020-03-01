@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+  body
+    -
+      modjss = {}
+
+    mixin modjs(name)
+      if !modjss[name]
+        div(modjs,style="white-space:pre-wrap;display:none")
+          block
+      - modjss[name] = true
+    +modjs("name"): :lsc
+      alert \ok
+    +modjs("name"): :lsc
+      alert \no
+
+    script: :lsc
+      s = document.createElement("script")
+      s.textContent = Array.from(document.querySelectorAll("[modjs]")).map(-> it.innerText).join(\\n)
+      console.log s.textContent
+      s.setAttribute \type, \text/javascript
+      document.body.appendChild s
+    div: :lsc
