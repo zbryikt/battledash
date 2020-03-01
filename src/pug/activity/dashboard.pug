@@ -87,8 +87,9 @@ block body
           li.nav-item: a.nav-link 提案期
           li.nav-item: a.nav-link 審查期
           li.nav-item: a.nav-link 決選發表
-          li.nav-item: a.nav-link.text-muted 新增 #[i.i-plus]
-        .row.mb-4.pb-4
+          li.nav-item.flex-grow-1.text-right: a.nav-link.text-muted.border-0 新增 +
+        .alert.alert-light.border 你可以為這個活動建立不同的階段，並為這些階段設定起迄時間；而當時間在任何階段以外的時候，活動將會套用此處的預設值。
+        //-.row.mb-2.pb-2
           .col-md
             label 起始時段
             .d-flex
@@ -99,38 +100,64 @@ block body
             .d-flex
               input.form-control.mr-2(type="date")
               input.form-control(type="time")
+        mixin config-sm(name)
+          .form-group.mr-2.flex-grow-1
+            label #{name}
+            .btn-group.d-block.d-flex
+              .btn.btn-outline-secondary ON
+              .btn.btn-outline-secondary OFF
+        mixin config(name,desc)
+          .d-flex.mb-2.pt-2.align-items-center.border-top.border-light
+            .flex-grow-1
+              label.mb-0 #{name}
+              .text-sm.text-muted #{desc}
+            div
+              if Math.random() < 0.5
+                .switch.on
+              else
+                .switch
+              style(type="text/css"): :stylus
+                .switch
+                  border: 1px solid #ccc
+                  padding: 1px
+                  border-radius: 1.75em
+                  width: 3.25em
+                  background: #edeeef
+                .switch:after
+                  content: " "
+                  display: block
+                  border-radius: 50%
+                  box-shadow: 0 2px 4px rgba(0,0,0,.2)
+                  width: 1.75em
+                  height: 1.75em
+                  background: #fff
+                .switch.on
+                  background: #00ff7b
+                .switch.on:after
+                  margin-left: auto
 
-        .d-flex
-          .form-group.mr-2.flex-grow-1
-            label 活動公開
-            .btn-group.d-block.d-flex
-              .btn.btn-outline-secondary ON
+
+            //-div: .btn-group
+              .btn.btn-outline-secondary.active ON
               .btn.btn-outline-secondary OFF
-          .form-group.mr-2.flex-grow-1
-            label 提案功能
-            .btn-group.d-block.d-flex
-              .btn.btn-outline-secondary ON
-              .btn.btn-outline-secondary OFF
-          .form-group.mr-2.flex-grow-1
-            label 評論功能
-            .btn-group.d-block.d-flex
-              .btn.btn-outline-secondary ON
-              .btn.btn-outline-secondary OFF
-          .form-group.mr-2.flex-grow-1
-            label 修改提案
-            .btn-group.d-block.d-flex
-              .btn.btn-outline-secondary ON
-              .btn.btn-outline-secondary OFF
-          .form-group.mr-2.flex-grow-1
-            label 修改評論
-            .btn-group.d-block.d-flex
-              .btn.btn-outline-secondary ON
-              .btn.btn-outline-secondary OFF
-          .form-group.mr-2.flex-grow-1
-            label 評審功能
-            .btn-group.d-block.d-flex
-              .btn.btn-outline-secondary ON
-              .btn.btn-outline-secondary OFF
+
+        .row.form
+          .col-md
+            +config("活動公開", "一般人都可以看到這個活動")
+            +config("提案功能", "註冊使用者可以自由提案")
+            +config("評論功能", "註冊使用者可以針對不同提案進行評論")
+          .col-md
+            +config("修改提案", "提案人可以修改自己的提案")
+            +config("修改評論", "留言用戶可以修改自己的評論")
+            +config("評審功能", "被標註為評審的使用者可以針對提案進行評論")
+
+        //-.d-flex
+          +config("活動公開", "一般人都可以看到這個活動")
+          +config("提案功能", "註冊使用者可以自由提案")
+          +config("評論功能", "註冊使用者可以針對不同提案進行評論")
+          +config("修改提案", "提案人可以修改自己的提案")
+          +config("修改評論", "留言用戶可以修改自己的評論")
+          +config("評審功能", "被標註為評審的使用者可以針對提案進行評論")
 
       +scope("board-create").card.shadow-sm.mb-4: .card-body: .p-4
         h2 編輯活動
@@ -147,10 +174,38 @@ block body
         hr.my-4
         .btn.btn-primary.disabled(ld="submit") 更新資料
 
-
+      +nbr(2)
       .card.w-100.mb-4: .card-body
-        h3 權限設定
-        p 權限設定讓您指派特定用戶來協助您管理維護您的組織、活動與用戶提案。我們已經預建了數種不同的角色，您可以依需求指派用戶到這些角色之中。
+
+        h4 權限設定
+        .text-muted.text-sm.mb-4 權限設定讓您指派特定用戶來協助您管理維護您的組織、活動與用戶提案。我們已經預建了數種不同的角色，您可以依需求指派用戶到這些角色之中。
+
+        ul.nav.nav-tabs.mb-4
+          li.nav-item: a.nav-link.active 管理員
+          li.nav-item: a.nav-link 工作人員
+          li.nav-item: a.nav-link 協作
+          li.nav-item: a.nav-link 黑名單
+          li.nav-item: a.nav-link 詳細清單
+          li.nav-item.flex-grow-1.text-right: a.nav-link.text-muted.border-0 新增 +
+
+        .px-4
+          .text-muted.mb-4 擁有管理此活動的所有權限，包含設定權限、更改任何設定等。
+          .d-flex.flex-wrap.justify-content-between
+            each i in [1,2,3,4,5]
+              .d-flex.align-items-center.mr-4.mb-4.pr-4
+                .mr-2(style="width:32px"): .aspect-ratio.ratio-1by1.bg-dark.rounded
+                div
+                  b.mr-2 Kirby Wu
+                  i.i-close.text-danger
+            //-each i in [1,2,3,4,5]
+              .d-flex.align-items-center.mr-4.mb-4.pr-4
+                .mr-2(style="width:64px"): .aspect-ratio.ratio-1by1.bg-dark.rounded
+                div
+                  b Kirby Wu
+                  .text-muted.dropdown-toggle 管理員
+            //-.mr-2.rounded.border(style="height:64px;width:128px").px-4: .vertical-center 新增
+          .btn.btn-outline-primary 新增 .. 
+
         //-.d-flex.align-items-center
           .mr-2(style="width:48px"): .aspect-ratio.ratio-1by1.bg-dark.rounded
           .font-weight-bold.flex-grow-1 Kirby Wu
@@ -158,16 +213,15 @@ block body
             .btn.btn-outline-secondary 管理員
             .dropdown-menu
         br
-        .d-flex.flex-wrap.justify-content-between
+        //-.d-flex.flex-wrap.justify-content-between
           each i in [1,2,3,4,5]
             .d-flex.align-items-center.mr-4.mb-4.pr-4
               .mr-2(style="width:64px"): .aspect-ratio.ratio-1by1.bg-dark.rounded
               div
                 b Kirby Wu
                 .text-muted.dropdown-toggle 管理員
-        .btn.btn-outline-primary 新增 .. 
         +nbr(2)
-        .typeset
+        //-.typeset
           h4 管理員
           hr.my-2
           p 擁有管理此活動的所有權限，包含設定權限、更改任何設定等。

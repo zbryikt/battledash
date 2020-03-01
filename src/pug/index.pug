@@ -9,6 +9,7 @@ block head
 block body
   include /project/mixin.pug
   include /activity/mixin.pug
+  include /modules/cover/authpanel.pug
   .w-100.h-100.bg-dark.text-dark(
   style="background:url(/assets/img/c/bg/fluid.svg) center center no-repeat;background-size:cover;")
     .row.h-100.w-100.no-gutters
@@ -74,3 +75,5 @@ block body
 block script
   script: :lsc
     smoothScroll!
+    ldc.register \main, <[auth]>, ({auth}) ->
+    ldc.app \main

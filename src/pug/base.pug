@@ -10,6 +10,7 @@ html
   include /project/mixin.pug
   include /activity/mixin.pug
   include /edit/index.pug
+  include /modules/authpanel.pug
   head
     meta(charset="utf-8")
     +css(`${vars.root}/assets/lib/flatpickr/flatpickr.min.css`)
@@ -18,6 +19,7 @@ html
     +css(`${vars.root}/css/index.css`)
     block head
   body
+    //-+authpanel
     if !ctrl.navtop.navroot
       include modules/navtop.pug
     else
