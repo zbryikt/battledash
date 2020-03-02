@@ -1,0 +1,36 @@
+//- module
+
+style(type="text/css"): :stylus
+  .switch
+    cursor: pointer
+    border: 1px solid #ccc
+    padding: 1px
+    border-radius: 1.75em
+    width: 3.25em
+    background: #edeeef
+  .switch:after
+    content: " "
+    display: block
+    border-radius: 50%
+    box-shadow: 0 2px 4px rgba(0,0,0,.2)
+    width: 1.75em
+    height: 1.75em
+    background: #fff
+  .switch.on
+    background: #00ff7b
+  .switch.on:after
+    margin-left: auto
+
+mixin config-sm(name)
+  .form-group.mr-2.flex-grow-1
+    label #{name}
+    .btn-group.d-block.d-flex
+      .btn.btn-outline-secondary ON
+      .btn.btn-outline-secondary OFF
+mixin config(name,desc)
+  .d-flex.mb-2.pt-2.align-items-center.border-top.border-light
+    .flex-grow-1
+      label.mb-0 #{name}
+      .text-sm.text-muted #{desc}
+    .ml-2
+      .switch(ld="switch",data-name=name)
