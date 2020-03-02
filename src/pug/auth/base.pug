@@ -1,0 +1,12 @@
+//- module
+extends /base.pug
+block vars
+  - ctrl.foot.edgeMask = false;
+  - ctrl.navtop.placeholder = false;
+  - ctrl.carbon.className = "portrait left-bottom dark"
+block body
+  .w-100.h-100.text-center.vertical-center(
+  style="background:url(/assets/img/c/bg/valley.svg) center center;background-size:cover")
+    div: block content
+block script
+  +script("/js/auth/password.js")

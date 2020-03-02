@@ -1,0 +1,12 @@
+extends /auth/base.pug
+block content
+  h1 Reset Link Sent.
+  p Check your email inbox for the password reset email.
+  img#img(src="/assets/img/c/icon/sending-mail.svg")
+  p 
+    div Mail not received? Don't forget to check your #[b spam folder].
+    div Or try #[a(href="/auth/reset/") sending it again] / #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") contact us] directly.
+  script.
+    setTimeout(function() {
+      img.setAttribute("src", "/assets/img/c/icon/inbox.svg?" + Math.random().toString(36).substring(2));
+    }, 2000);

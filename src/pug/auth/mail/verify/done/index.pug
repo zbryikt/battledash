@@ -1,0 +1,25 @@
+extends /auth/base.pug
+block content
+  h1
+    | Mail Verified.
+    sup #[i.i-check.text-success]
+  p We have verified your mail address. You can also check the verification status in your #[a(href="/me/settings/") settings page].
+  img(src="/assets/img/p/auth/mail/verify/done/mail.svg")
+  +nbr(3)
+  p
+    a(href="/me/settings") View Settings
+    span.mx-2 or
+    a(href="/") Back to Top
+
+  script: :lsc
+    ldc.register <[auth ldcvmgr]>, ({auth, ldcvmgr}) ->
+      return
+      ensure = ->
+        auth.ensure!
+          .then -> window.location.href= \/
+          .catch -> ensure!
+      auth.get!then ->
+        if it.user =>
+          lda.ldcvmgr.toggle("logged-in")
+          debounce 2000 .then -> window.location.href = \/
+        else debounce 2000 .then -> ensure!

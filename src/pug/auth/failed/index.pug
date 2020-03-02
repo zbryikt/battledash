@@ -1,0 +1,14 @@
+extends /auth/base.pug
+include /modules/authpanel.pug
+block content
+  +authpanel()
+    h1.mb-4 登入失敗
+    p you might have signed up with another email / password before. please try:
+    ul
+      li try other password / login methods
+      li check spelling in your email
+      li #[a(href="/auth/reset/",style="color:#0ff") reset your password]
+      li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');",style="color:#0ff") contact us] directly
+
+
+

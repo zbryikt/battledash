@@ -1,0 +1,8 @@
+extends /auth/base.pug
+block content
+  h1 Reset Link Expired.
+  p It took so long that we have to expire this link to keep your account safe.
+  img.my-4(src="/assets/img/p/auth/reset/alarm.svg")
+  p 
+    div Wait too long to receive this mail?
+    div You can #[a(href="/auth/reset/") send it again].

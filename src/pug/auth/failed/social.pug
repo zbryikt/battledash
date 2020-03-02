@@ -1,0 +1,20 @@
+doctype html
+include /modules/common.pug
+html
+  head
+    +css("/css/pack/vendor.min.css")
+    +css("/css/index.css")
+  body(style="background-image:linear-gradient(15deg,#bdf,#f9fbfe 35%,#fff 70%)")
+    .p-4
+      img.mx-auto.d-block.my-4(src="/assets/img/c/logo/ldio-alt.svg",style="width:160px;opacity:0.5")
+      h1.text-center.my-4 Login Failed.
+      br
+      p You might have already signed up with other methods or with email before. To resolve this issue, you can try:
+        
+      ul
+        li try with other password / login methods
+        li check spelling in your email
+        li reset your password
+      p You can also #[a(href="mailto:contact@loading.io") contact us] directly and let us help you recover your account.
+    +nbr(2)
+    img.mx-auto.d-block(style="width:64px;position:relative;left:-10px",src="/assets/img/c/logo/plotdb-sm-text.svg")

@@ -1,0 +1,30 @@
+extends /auth/base.pug
+block content
+  img.m-4(src="/assets/img/c/logo/ldio-alt.svg",style="width:200px;margin:auto")
+  h3 Forgot Password?
+  +nbr(1)
+  +scope("password-reset"): form.form.text-left(style="margin:auto;width:400px")
+    .from-group
+      p Enter the email associated with your account for a password reset link:
+      input.form-control.form-control-lg(ld="email",name="email",placeholder="e.g., me@someurl.com")
+      .invalid-feedback invalid email
+      .btn.btn-success.btn-block.btn-lg.mt-2.disabled(ld="submit") Send Reset Link
+    +nbr(2)
+    .text-muted: small
+      p You won't get password reset mail if you didn't use this email to signup.
+      p Please #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") contact us] directly for recovering account if you don't remember the email you used to sign up.
+    .ldcv(ld="not-found"): .base.w-640.rwd: .inner.card: .card-body: .p-4
+      h1.text-center Email not Found
+      .text-center.text-muted.mb-4 we can't find an account associated with the email you provided.
+      .text-muted
+        p This might because:
+        ul
+          li You used another email before.
+          li There's typos in your input.
+          li There's typos in the email you used to sign up.
+        p Need help to find the email you used? Please #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") contact us] directly.
+      +nbr(1)
+      .row
+        .col-md: .btn.btn-lg.btn-primary.btn-block(onclick="lda.ldcvmgr.toggle('contact')") Contact Us
+        .col-md: .btn.btn-lg.btn-outline-dark.btn-block(data-ldcv-set="") Close This Popup
+  +script("/js/auth/reset/index.js")
