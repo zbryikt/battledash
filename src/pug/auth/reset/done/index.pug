@@ -1,14 +1,14 @@
 extends /auth/base.pug
 block content
-  h1 Password Reset.
-  p Now #[a(href="#",onclick="lda.auth.show('login')") let's try] if you can login with your brand new password.
+  h1 密碼重設完成。
+  p 那麼就 #[a(href="#",onclick="lda.auth.show('login')") 讓我們試試] 您是否可以使用新密碼成功登入吧。
   img(src="/assets/img/p/auth/reset/key.svg")
   p 
-    div Still not be able to login?
-    div Try #[a(href="/auth/reset/") reseting it again] or #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") contact us] directly.
+    div 還是不能登入嗎？
+    div 您可以 #[a(href="/auth/reset/") 再重設一次]，或者 #[a(href="#",onclick="lda.ldcvmgr.toggle('contact')") 直接聯絡我們]。
   .ldcv.ldcvmgr(data-name="logged-in",data-lock="true"): .base.w-640.rwd: .inner.card: .card-body.text-center: .p-4
-    h1 You have logged in.
-    p.mb-2 We will now redirect you to the homepage...
+    h1 您已經登入。
+    p.mb-2 現在就將您重導至首頁...
     br
     .ld.ldld.bare.running.em-1.m-auto
 

@@ -4,9 +4,11 @@ block vars
   - ctrl.foot.edgeMask = false;
   - ctrl.navtop.placeholder = false;
   - ctrl.carbon.className = "portrait left-bottom dark"
+  - ctrl.authpanel = false
 block body
   .w-100.h-100.text-center.vertical-center(
   style="background:url(/assets/img/c/bg/valley.svg) center center;background-size:cover")
     div: block content
 block script
+  block script
   +script("/js/auth/password.js")
