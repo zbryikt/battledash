@@ -11,45 +11,49 @@ block body
         h4 權限設定
         .text-muted.text-sm.mb-4 權限設定讓您指派特定用戶來協助您管理維護您的組織、活動與用戶提案。我們已經預建了數種不同的角色，您可以依需求指派用戶到這些角色之中。
 
-        ul.nav.nav-tabs.mb-4(ld="nav")
-          li.nav-item: a.nav-link.active(data-name="管理員") 預設
-          li.nav-item: a.nav-link(data-name="管理員") 管理員
-          li.nav-item: a.nav-link(data-name="工作人員") 工作人員
-          li.nav-item: a.nav-link(data-name="黑名單") 黑名單
-          li.nav-item: a.nav-link(data-name="詳細清單") 詳細清單
-          li.nav-item.flex-grow-1.text-right: a.nav-link.text-muted.border-0 新增 +
+        ul.nav.nav-tabs.mb-4(ld="roles")
+          li.nav-item: a.nav-link.active(ld="role-all",data-type="all",data-name="n/a") 清單
+          li.nav-item(ld-each="role"): a.nav-link
+          li.nav-item.flex-grow-1
+          li.nav-item.text-right: a.nav-link.text-muted.border-0(ld="new-role") 新增 +
 
-        .px-0.d-none(ld="all")
+        .form-group.mb-2
+          input.form-control(ld="role-name",placeholder="角色名稱")
+          .invalid-feedback 不能用這個名稱
+        .alert.alert-light.px-2.mb-4.border
+          .text-muted(ld="role-desc-all",data-name="") 此列表列出所有出現在權限設定中的用戶，以及他們所擔任角色。
+          div(ld="roles-desc")
+            .text-muted.d-none(ld-each="role-desc",contenteditable="true")
+
+        div
+          .py-3.px-3(ld="newuser"): .d-inline-block.clickable.text-primary(ld="toggle-newuser") 新增使用者權限 ...
+          .card.shadow-sm.mx-2.d-none(ld="newuser"): .card-body.p-2
+            .d-flex.align-items-center
+              .input-group
+                input.form-control.border-secondary.border-right-0(ld="new-name", placeholder="搜尋使用者 ... ")
+                .input-group-appned(ld="new-type all-list")
+                  .dropdown(ld="role-picker")
+                    .btn.btn-outline-secondary.dropdown-toggle.rounded-0(ld="picked-role",data-toggle="dropdown")
+                    .dropdown-menu
+                      .dropdown-item(ld-each="role-option")
+                .input-group-append
+                  .btn.btn-outline-secondary(ld="new") 增加
+              .ml-4.mr-2.clickable(ld="toggle-newuser"): i.i-close
+
+        .px-0(ld="all-list")
           .row.no-gutters
-            each i in [1,2,3,4,5,6]
-              .col-md-6: .border.rounded.d-flex.p-2.m-2.align-items-center.shadow-sm
-                .mr-2(style="width:2.75em"): .aspect-ratio.ratio-1by1.bg-dark.rounded
-                .flex-grow-1
-                  b Kirby Wu
-                  .text-sm.text-muted.dropdown-toggle 管理員
-                .pr-2: i.i-close
-          .py-2.px-3: a.btn-text(href="#") 新增使用者權限 ...
+            .col-md-6(ld-each="user"): .border.rounded.d-flex.p-2.m-2.align-items-center.shadow-sm
+              .mr-2(style="width:2.75em"): .aspect-ratio.ratio-1by1.bg-dark.rounded
+              .flex-grow-1 #[b]#[.text-sm.text-muted]
+              .pr-2: i.i-close.clickable
 
-
-        .px-0(ld="list")
-          -
-            desc = [
-              ["管理員", "擁有管理此活動的所有權限，包含設定權限、更改任何設定等。"],
-              ["工作人員", "可以管理提案與留言、並具有存取後台的權限"],
-              ["追問人", "評論時會帶有特別的徽章"],
-              ["黑名單", "無法留言或提案"]
-            ];
-
-          .px-2
-            each item in desc
-              .text-muted.mb-4.d-none(data-name=item[0]) #{item[1]}
+        .px-0.d-none(ld="custom-list")
           .row.no-gutters
-            .col-md-6(ld-each="item"): .border.rounded.d-flex.p-2.m-2.align-items-center.shadow-sm
+            .col-md-6(ld-each="user"): .border.rounded.d-flex.p-2.m-2.align-items-center.shadow-sm
               .mr-2(style="width:2.25em"): .aspect-ratio.ratio-1by1.bg-dark.rounded
-              .flex-grow-1: b(ld="name")
-              .pr-2: i.i-close
+              .flex-grow-1: b
+              .pr-2: i.i-close.clickable
 
-          .py-2.px-3: a.btn-text(href="#") 新增使用者權限 ...
           .mt-4.px-2
             h5 此名單的權限
             .row
@@ -63,46 +67,9 @@ block body
                 +config("建立留言", "可以新增或修改留言")
                 +config("管理留言", "可以修改、刪除或設定留言")
                 +config("評審", "可以進入評審介面")
-
-      .card.shadow-sm: .card-body
-        label 新增權限
-        .d-flex
-          .mr-2.flex-grow-1: input.form-control(ld="new-name", placeholder="搜尋使用者 ... ")
-          .mr-2: select.form-control(ld="new-type list")
-            option 管理員
-            option 工作人員
-            option 黑名單
-          .btn.btn-outline-secondary(ld="new") 增加
+          hr
+          .btn.btn-outline-danger(ld="delete-role") 刪除角色
 
 block script
-  script: :lsc
-    lc = {perm: {}, all: [{name:"Kirby Wu"},{name:"Jack Sparrow"}, {name:"Davy Jones"}]}
-    view = new ldView do
-      root: document.body
-      action: do
-        click: do
-          nav: ({node, evt}) ->
-            if !(name = evt.target.getAttribute(\data-name)) => return
-            tabs = ld$.find(node, '[data-name]')
-            tabs.map -> it.classList.remove \active
-            evt.target.classList.add \active
-            lc.selected = name
-            view.getAll(\list).map -> it.classList.toggle \d-none, (name == \詳細清單)
-            view.getAll(\all).map -> it.classList.toggle \d-none, (name != \詳細清單)
-          "new": ({node, evt}) ->
-            lc.all.push {name: view.get(\new-name).value}
-            view.render!
-
-      handler: do
-        list: (->), all: (->), "new-name": (->), "new-type": (->)
-        item: do
-          list: ->
-            lc.all
-          action: click: ({node, data, evt}) ->
-            if evt.target.className = \i-close =>
-              lc.all.splice(lc.all.indexOf(data), 1)
-              view.render!
-          handler: ({node, data}) -> ld$.find(node, '[ld=name]', 0).innerText = data.name
-
-        nav: ->
-        
+  +script("/assets/lib/ctrlz/ctrlz.bundle.min.js")
+  +script("/js/activity/perm.js")
