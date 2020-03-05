@@ -69,9 +69,13 @@
           ldld.off!
 
   authpanel = ld$.find document, \.authpanel, 0
+  console.log 123
   if authpanel =>
+    console.log \here
     acts = ld$.find authpanel, '[data-action]'
+    console.log authpanel, acts
     authpanel.addEventListener \click, (e) ->
+      console.log 1
       if !e or !(n = e.target) or !e.target.getAttribute => return
       act = e.target.getAttribute \data-action
       auth.switch act

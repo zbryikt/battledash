@@ -144,10 +144,14 @@ var slice$ = [].slice;
       };
     }
     authpanel = ld$.find(document, '.authpanel', 0);
+    console.log(123);
     if (authpanel) {
+      console.log('here');
       acts = ld$.find(authpanel, '[data-action]');
+      console.log(authpanel, acts);
       authpanel.addEventListener('click', function(e){
         var n, act;
+        console.log(1);
         if (!e || !(n = e.target) || !e.target.getAttribute) {
           return;
         }
