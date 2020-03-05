@@ -1,6 +1,5 @@
 extends /auth/base.pug
 block content
-  //-img.m-4(src="/assets/img/c/logo/ldio-alt.svg",style="width:200px;margin:auto")
   h3 忘記密碼？
   +nbr(1)
   +scope("password-reset"): form.form.text-left(style="margin:auto;width:400px")
@@ -27,4 +26,5 @@ block content
       .row
         .col-md: .btn.btn-lg.btn-primary.btn-block(onclick="lda.ldcvmgr.toggle('contact')") 聯絡我們
         .col-md: .btn.btn-lg.btn-outline-dark.btn-block(data-ldcv-set="") 關閉視窗
+block script
   +script("/js/auth/reset/index.js")

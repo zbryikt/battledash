@@ -1,1 +1,10 @@
-{}
+{
+  "js": {
+    "base": [
+      "/assets/ldui/ldui.min.js",
+      "/assets/ldui-ext/index.js",
+      "/js/modules/core/base.js",
+      "/js/modules/core/ldcvmgr.js"
+    ]
+  }
+}

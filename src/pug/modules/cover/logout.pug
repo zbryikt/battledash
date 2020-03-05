@@ -1,0 +1,9 @@
+include /modules/common.pug
+.ldcv.ldcvmgr(data-lock="true",data-name="logout"): .base.w-640.rwd: .inner.card: .card-body.text-center: .p-4
+  h1 您已登出。
+  p 請重新整理您的視窗以更新您瀏覽器的狀態。
+  br
+  .m-auto.text-left.text-muted
+    p 在您重新整理後，您的登入及隱私資訊便不會再出現在網站上，有些功能也將無法使用。當您再次使用需要登入後才能利用的功能時，我們會再次彈出登入視窗請您登入。
+    br
+    .btn.btn-primary.btn-block.btn-lg.mr-2(onclick="window.location.reload()") 重新載入
