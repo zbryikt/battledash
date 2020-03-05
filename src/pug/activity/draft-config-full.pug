@@ -1,0 +1,30 @@
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = true;
+  - ctrl.navtop.shown = true;
+block body
+  .p-4
+    .w-640.mx-auto
+      include switch.pug
+      .card.mb-4.shadow-sm: .card-body: .p-4
+
+        .row.form
+          .col-md
+            +config("活動公開", "一般人都可以看到這個活動")
+            +config("提案功能", "註冊使用者可以自由提案")
+            +config("評論功能", "註冊使用者可以針對不同提案進行評論")
+          .col-md
+            +config("修改提案", "提案人可以修改自己的提案")
+            +config("修改評論", "留言用戶可以修改自己的評論")
+            +config("評審功能", "被標註為評審的使用者可以針對提案進行評論")
+
+        hr
+        .d-flex.mt-4
+          .flex-grow-1: .btn.btn-outline-danger(ld="delete") 刪除
+          .d-none(ld="custom"): .d-flex.align-items-center
+            span.mr-2 階段名稱
+            div: input.form-control(ld="name")
+
+block script
+  +script("/assets/lib/ctrlz/ctrlz.bundle.min.js")
+  +script("/js/activity/config.js")

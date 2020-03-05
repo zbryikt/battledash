@@ -101,7 +101,7 @@
     view-config.action.click <<< do
       switch: ({node,evt}) ->
         node.classList.toggle \on
-        c = obj.cfg.roles[lc.idx].{}cfg
+        c = obj.cfg.roles[obj.idx].{}config
         if !c => return
         c[node.getAttribute(\data-name)] = node.classList.contains(\on)
         update-history!
@@ -109,7 +109,7 @@
     view-config.handler <<< do
       switch: ({node}) ->
         if !lc.role => return
-        node.classList.toggle \on, !!lc.role.{}cfg[node.getAttribute(\data-name)]
+        node.classList.toggle \on, !!lc.role.{}config[node.getAttribute(\data-name)]
 
     view-config.handler <<< do
       user: do

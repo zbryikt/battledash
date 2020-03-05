@@ -205,7 +205,7 @@
         var node, evt, c, ref$;
         node = arg$.node, evt = arg$.evt;
         node.classList.toggle('on');
-        c = (ref$ = obj.cfg.roles[lc.idx]).cfg || (ref$.cfg = {});
+        c = (ref$ = obj.cfg.roles[obj.idx]).config || (ref$.config = {});
         if (!c) {
           return;
         }
@@ -220,7 +220,7 @@
         if (!lc.role) {
           return;
         }
-        return node.classList.toggle('on', !!((ref$ = lc.role).cfg || (ref$.cfg = {}))[node.getAttribute('data-name')]);
+        return node.classList.toggle('on', !!((ref$ = lc.role).config || (ref$.config = {}))[node.getAttribute('data-name')]);
       }
     });
     import$(viewConfig.handler, {
