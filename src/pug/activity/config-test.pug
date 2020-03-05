@@ -7,12 +7,21 @@ block body
     .w-640.mx-auto
       include config.pug
 block script
+  +script("/assets/lib/ctrlz/ctrlz.bundle.min.js")
   script: :lsc
     ldc.register \period, <[]>, ->
       lc = do
         period: <[ 預設 提案期 審查期 決選發表]>
         selected: 0
         config: {}
+
+      update-history = (do-debounce) ->
+        if do-debounce => update-history-debounced!
+        else history.update lc.config
+      update-history-debounced = debounce ->
+        history.update lc.config
+
+      history = new ctrlz {obj: JSON.parse(JSON.stringify(lc.config))}
       view = new ldView do
         root: document
         action: do
@@ -20,9 +29,11 @@ block script
             time: ({node, evt}) ->
               cfg = lc.config{}[lc.selected]
               cfg[node.getAttribute(\ld)] = node.value
+              update-history!
             name: ({node, evt}) ->
               lc.period[lc.selected] = node.value
               view.render \period
+              update-history!
 
           click: do
             nav: ({node, evt}) ->
@@ -44,6 +55,7 @@ block script
               node.classList.toggle \on
               cfg = lc.config{}[lc.selected]
               cfg[node.getAttribute(\data-name)] = node.classList.contains(\on)
+              update-history!
             delete: ->
               if !lc.selected => return
               delete lc.period[lc.period[lc.selected]]
@@ -55,6 +67,9 @@ block script
           time: ({node}) -> flatpickr node, {enableTime: true, dateFormat: "Y-m-d H:i" }
         handler: do
           default: (->), custom: (->)
+          switch: ({node}) ->
+            node.classList.toggle \on, !!lc.config{}[lc.selected][node.getAttribute(\data-name)]
+
           period: do
             list: -> lc.period
             handle: ({node, data, idx}) ->
@@ -62,4 +77,14 @@ block script
                 ..innerText = data
                 ..classList.toggle \active, (idx == lc.selected)
                 ..setAttribute \data-name, data
+
+      document.addEventListener \keydown, (e) ->
+        if e.keyCode == 90 and (e.metaKey or e.ctrlKey) =>
+          if e.shiftKey => history.redo!
+          else history.undo!
+          payload = JSON.parse(JSON.stringify(history.get!))
+          lc.config = payload
+          view.render!
+
     ldc.app \period
+
