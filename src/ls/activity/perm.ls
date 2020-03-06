@@ -33,7 +33,7 @@
       history.update obj
 
     history = new ctrlz {obj: JSON.parse(JSON.stringify(obj))}
-    view-config = { root: document.body, action: {click: {}, keyup: {}}, handler: {}}
+    view-config = { root: '[ld-scope=permission-panel]', action: {click: {}, keyup: {}}, handler: {}}
     view-config.action.click <<< do
       roles: ({node, evt}) ->
         obj.idx = obj.cfg.roles.map(->it.name).indexOf(evt.target.getAttribute(\data-name))

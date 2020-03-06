@@ -6,7 +6,7 @@
     return auth.get().then(function(){
       var view, form;
       view = new ldView({
-        root: '[ld-scope=board-create]',
+        root: '[ld-scope=activity-basic]',
         action: {
           click: {
             submit: function(arg$){
@@ -26,7 +26,7 @@
         }
       });
       return form = new ldForm({
-        root: '[ld-scope=board-create]',
+        root: '[ld-scope=activity-basic]',
         submit: view.get('submit')
       });
     });

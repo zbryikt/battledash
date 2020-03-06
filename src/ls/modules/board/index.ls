@@ -2,7 +2,7 @@
   ldc.register \board, <[auth]>, ({auth}) ->
     auth.get!then ->
       view = new ldView do
-        root: '[ld-scope=board-create]'
+        root: '[ld-scope=activity-basic]'
         action: click: do
           submit: ({node}) ->
             #if node.classList.contains \disabled => return
@@ -11,7 +11,7 @@
               .then -> console.log \done.
               .catch -> console.log "failed:", it
       form = new ldForm do
-        root: '[ld-scope=board-create]'
+        root: '[ld-scope=activity-basic]'
         submit: view.get(\submit)
 
   ldc.app \board

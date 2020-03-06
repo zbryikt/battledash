@@ -51,7 +51,7 @@ body {
   background-repeat: no-repeat;
 }
 .authpanel .card-body {
-  background: url("/assets/img/c/bg/ball-wed.svg") center center no-repeat;
+  background: center center no-repeat;
   background-size: cover;
 }
 .authpanel .info {
@@ -110,4 +110,33 @@ body {
 }
 .authpanel.login *[data-show="signup"] {
   display: none;
+}
+.switch {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 1px;
+  border-radius: 1.75em;
+  width: 3.25em;
+  background: #edeeef;
+}
+.switch:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  width: 1.75em;
+  height: 1.75em;
+  background: #fff;
+}
+.switch.on {
+  background: #00ff7b;
+}
+.switch.on:after {
+  margin-left: auto;
+}
+.nav.nav-pills a.nav-link.active:hover {
+  color: #fff;
+}
+#nav-top nav {
+  padding: 0 2.5em;
 }

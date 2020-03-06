@@ -60,7 +60,7 @@
       obj: JSON.parse(JSON.stringify(obj))
     });
     viewConfig = {
-      root: document.body,
+      root: '[ld-scope=permission-panel]',
       action: {
         click: {},
         keyup: {}

@@ -61,12 +61,12 @@ render-profile = (req, res, id) ->
     .then (r={}) ->
       if !r.rows or !r.rows.length => return aux.reject 404
       ret.user = r.rows.0
-      io.query "select * from file where owner = $1", [id]
-    .then (r={}) ->
-      ret.files = r.rows or []
-      io.query "select * from doc where owner = $1 order by accesstime desc", [id]
-    .then (r={}) ->
-      ret.docs = r.rows or []
+  #    io.query "select * from file where owner = $1", [id]
+  #  .then (r={}) ->
+  #    ret.files = r.rows or []
+  #    io.query "select * from doc where owner = $1 order by accesstime desc", [id]
+  #  .then (r={}) ->
+  #    ret.docs = r.rows or []
       res.render \me/profile.pug, ret
       return null
     .catch aux.error-handler res

@@ -2,13 +2,72 @@ extends /base.pug
 block vars
   - ctrl.navtop.placeholder = true;
   - ctrl.navtop.shown = true;
-  - ctrl.navtop.className = "navbar-light bg-semi-light";
+  - ctrl.navtop.className = "navbar-light bg-white";
   style.
     body { font-size: 18px }
     p { opacity: 0.75 }
 block body
   include ../activity/mixin.pug
-  .w-1024.mx-auto.rwd.typeset.heading-contrast
+  include ../activity/mixins/index.pug
+  include mixin.pug
+  .w-1024.mx-auto.d-flex
+    .px-4.pb-4
+      .sticky(style="top:55px")
+        +org-card-sm
+        .text-center
+          br
+          p.text-muted.text-sm 這裡是您組織 的管理後台。
+          hr
+          a.btn.btn-text.btn-block.clickable(href="/org/") 組織頁面
+          .btn.btn-text.btn-block 資訊分析
+    .px-4.pb-4.flex-grow-1
+      .navbar.navbar-expand-lg.navbar-light.mb-4.border.shadow-sm.rounded.sticky.z-fixed.bg-white(style="top:55px")
+        .collapse.navbar-collapse
+          ul.nav.nav-pills.mr-auto(ld="tabbar")
+            li.nav-item: a.nav-link.active(ld="tabbar-tab default",data-name="basic") 基本資訊
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="perm") 權限
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="analysis") 視覺統計
+          ul.navbar-nav.ml-auto
+            li.nav-item: a.nav-link(href="/org/dashboard.html") 管理活動
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="perm")
+        .card-body: .p-4: +permission-panel
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf(ld="tabbar-panel default",data-name="basic")
+        .card-body: .p-4: +scope("activity-basic")
+          h4 基本資訊
+          p.text-sm.text-muted 您可以在這裡為設定整個組織的通用資訊，例如名稱、簡介、主視覺等等。
+          hr.my-4
+          .row.align-items-center.mb-4
+            .col-md-3.text-right 組織名稱
+            .col-md: input.form-control.border-bottom.rounded-0(style="border:0")
+          .row.align-items-center.mb-4
+            .col-md-3.text-right 組織代碼
+            .col-md: input.form-control.border-bottom.rounded-0(style="border:0")
+          .row.align-items-start.mb-4
+            .col-md-3.text-right 組織介紹
+            .col-md: textarea.form-control(rows="4")
+          .row.align-items-start.mb-4
+            .col-md-3.text-right 組織主圖
+            .col-md: .w-100: .aspect-ratio.ratio-2by1.bg-secondary.rounded.overflow-hidden
+              .vertical-center.bg-semi-dark: .w-100.text-center
+                .btn.btn-outline-light.btn-upload 上傳 #[input(type="file")]
+
+          hr.my-4
+          .d-flex.justify-content-end
+            div: .btn.btn-primary.disabled(ld="submit") 更新資料
+
+
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="analysis"): .card-body: .p-4
+        +scope("activity-analysis")
+          h4 視覺統計
+          p.text-sm.text-muted 透過圖表與數據概略的了解目前活動進展、完成度與用戶參與的情形。
+          hr.my-4
+          .d-flex.w-100.mb-4
+            input.form-control.mr-2(type="date")
+            input.form-control(type="date")
+          img.w-100(src="/assets/img/c/chart/line.svg")
+
+
+  //-.w-1024.mx-auto.rwd.typeset.heading-contrast
     .navbar.navbar-expand-lg.navbar-light.mb-4.border.shadow-sm.rounded
       a.navbar-brand(href="#") 零時政府揪松團
       button.navbar-toggler(data-toggle="colapse",data-target="#main-menu"): span.navbar-toggler-icon
@@ -54,3 +113,11 @@ block body
               .text-muted.dropdown-toggle 管理員
       .btn.btn-outline-primary 新增 .. 
 
+
+block script
+  +script("/js/edit.js")
+  +script("/js/modules/board/index.js")
+  +script("/assets/lib/ctrlz/ctrlz.bundle.min.js")
+  //-+script("/js/activity/config.js")
+  +script("/js/activity/perm.js")
+  +script("/js/activity/tabbar.js")

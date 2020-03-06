@@ -22,7 +22,7 @@
     update-history = -> history.update obj
     history = new ctrlz {obj: JSON.parse(JSON.stringify(obj))}
 
-    view-config = {root: document.body, init: {}, handler: {}, action: {click: {}, input: {}}}
+    view-config = {root: '[ld-scope=config-panel]', init: {}, handler: {}, action: {click: {}, input: {}}}
 
     view-config.action.input <<< do
       "period-name": ({node}) ->
@@ -48,7 +48,6 @@
         update-history!
         view.render!
       "delete-period": ({node, evt}) ->
-        console.log obj.idx
         if obj.cfg.periods.length <= 1 => alert "最少要有一個階段"
         else if ~obj.idx =>
           obj.cfg.periods.splice(obj.idx,1)

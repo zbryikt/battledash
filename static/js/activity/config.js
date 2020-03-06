@@ -30,7 +30,7 @@
       obj: JSON.parse(JSON.stringify(obj))
     });
     viewConfig = {
-      root: document.body,
+      root: '[ld-scope=config-panel]',
       init: {},
       handler: {},
       action: {
@@ -91,7 +91,6 @@
       "delete-period": function(arg$){
         var node, evt;
         node = arg$.node, evt = arg$.evt;
-        console.log(obj.idx);
         if (obj.cfg.periods.length <= 1) {
           return alert("最少要有一個階段");
         } else if (~obj.idx) {

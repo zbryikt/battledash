@@ -1,4 +1,6 @@
 extends base.pug
+block vars
+ - ctrl.cover.authpanel = false
 block content
   include /modules/authpanel.pug
   .text-left: +authpanel

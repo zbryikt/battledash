@@ -1,7 +1,7 @@
 //- module
 doctype html
 include /../../static/assets/ldui/pug/ldui.pug
-- var ctrl = {navtop: {placeholder: true, shown: true}, foot: {}, carbon: {}}
+- var ctrl = {cover: {authpanel: true}, navtop: {placeholder: true, shown: true}, foot: {}, carbon: {}}
 - var vars = {root: ""}
 block vars
 html
@@ -10,35 +10,26 @@ html
   include /project/mixin.pug
   include /activity/mixin.pug
   include /edit/index.pug
-  include /modules/authpanel.pug
   head
     meta(charset="utf-8")
-    +css(`${vars.root}/assets/lib/flatpickr/flatpickr.min.css`)
-    +css(`${vars.root}/assets/bootstrap/4.3.1/css/bootstrap.min.css`)
-    +css(`${vars.root}/assets/ldui/ldui.min.css`)
-    +css(`${vars.root}/css/index.css`)
+    +css("/assets/lib/flatpickr/flatpickr.min.css")
+    +css("/assets/bootstrap/4.3.1/css/bootstrap.min.css")
+    +css("/assets/ldui/ldui.min.css")
+    +css("/css/index.css")
     block head
   body
-    +script(`${vars.root}/js/pack/base.min.js`)
-    if !ctrl.navtop.navroot
-      include modules/navtop.pug
-    else
-      include /modules/navroot.pug
+    +script("/js/pack/base.min.js")
+    include modules/navtop.pug
+    .ldNotify
     block body
     .px-2.py-0.bg-dark.shadow-sm.border(onclick="lda.ldcvmgr.toggle('dev-note')",
     style="position:fixed;bottom:0;right:10px;border-radius:5px 5px 0 0"): a.text-light(href="#") Dev Note
+    if ctrl.cover.authpanel
+      include /modules/cover/authpanel.pug
     include /modules/foot.pug
-    +script(`${vars.root}/assets/lib/flatpickr/flatpickr.min.js`)
-    +script(`${vars.root}/assets/bootstrap.native.4/2.0.26/bootstrap-native-v4.min.js`)
-    //-+script(`${vars.root}/assets/ldui/ldui.min.js`)
-    //-+script(`${vars.root}/assets/ldui-ext/index.js`)
-    +script(`${vars.root}/assets/xfl/xfl.js`)
-    +script(`${vars.root}/js/modules/util.js`)
-    +script(`${vars.root}/js/modules/core/loader.js`)
-    +script(`${vars.root}/js/modules/core/auth.js`)
-    +script(`${vars.root}/js/modules/core/navtop.js`)
-    //-+script(`${vars.root}/js/modules/core/ldcvmgr.js`)
-    +script(`${vars.root}/js/modules/core/base.js`)
-    +script(`${vars.root}/js/base.js`)
+    +script("/js/pack/vendor.min.js")
+    +script("/assets/lib/flatpickr/flatpickr.min.js")
+    +script("/assets/xfl/xfl.js")
+    +script("/js/pack/core.min.js")
 
     block script

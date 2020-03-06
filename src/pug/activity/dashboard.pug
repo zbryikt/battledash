@@ -2,167 +2,95 @@ extends /base.pug
 block vars
   - ctrl.navtop.placeholder = true;
   - ctrl.navtop.shown = true;
+  - ctrl.navtop.className = "navbar-light text-dark bg-white"
 block body
-  .ldcv.ldcvmgr.scroll(data-name="dev-note"): .base.w-768.rwd: .inner.card: .card-body
-    .typeset.heading-contrast
-
-      p 活動後台頁面
-      h5 入口:
-      ul
-        li 個人檔案
-        li 活動資訊頁
-        li 活動提案列表
-      h5 出口
-      ul
-        li 活動提案列表
-        li 活動資訊頁
-        li 活動資訊頁編輯器
-      h5 主要功能:
-      ul
-        li 預覽活動
-        li 修改活動資訊
-        li
-          p 調整活動狀態
-          ul
-            li 開關報名 / 尚未開跑 / 活動中 / 活動結束
-            li 開關編輯 / 開關評論 / 開關評審
-            li 設定階段 ( 多階段活動用 )
-            li 發布活動 ( 發布時檢查所有資訊是否完整 )
-        li
-          p 提案資訊
-          ul
-            li 提案數
-            li 評論狀況
-        li 角色調整
-        li 刪除活動/隱藏活動
-      p 活動 schema
-      .code-block.
-        activity
-          description - text(300)
-          title - text(100)
-          slug - text(32) not null unique
-          key - int not null unique primary key
-          deleted - bool
-          visible - bool
-          detail: jsonb
-          createdtime - timestamp
-          modifiedtime - timestamp
-          orgnization - int foreign key(organization)
-          owner - int foreign key(user)
-          - index key, slug, createdtime
-
-
-
-  .w-1200.mx-auto.d-flex
-    .p-4
-      .sticky
+  include dev-note.pug
+  include mixins/index.pug
+  .w-1024.mx-auto.d-flex
+    .px-4.pb-4
+      .sticky(style="top:55px")
         +act-card-sm
-
         .text-center
           br
-          .list-group.mb-4
-            .list-group-item(href="/org/") 所屬組織
-            .list-group-item(href="/activity/") 活動主頁
-            .list-group-item 資訊分析
+          p.text-muted.text-sm 這裡是您活動的管理後台。
+          hr
+          .btn.btn-text.btn-block(href="/org/") 所屬組織
+          .btn.btn-text.btn-block(href="/activity/") 活動主頁
+          .btn.btn-text.btn-block 資訊分析
 
-    .p-4.flex-grow-1
+    .px-4.pb-4.flex-grow-1
 
-      .navbar.navbar-expand-lg.navbar-light.mb-4.border.shadow-sm.rounded.sticky.z-fixed.bg-white
-        a.navbar-brand(href="#") 活動頁面
-        button.navbar-toggler(data-toggle="colapse",data-target="#main-menu"): span.navbar-toggler-icon
+      .navbar.navbar-expand-lg.navbar-light.mb-4.border.shadow-sm.rounded.sticky.z-fixed.bg-white(style="top:55px")
         .collapse.navbar-collapse
-          ul.navbar-nav.mr-auto
-            li.nav-item: a.nav-link(href="#") 基本資訊
-            li.nav-item: a.nav-link(href="#") 設定
-            li.nav-item: a.nav-link(href="#") 權限
-            li.nav-item: a.nav-link(href="#") 主頁設計
-            li.nav-item: a.nav-link(href="#") 統計分析
+          ul.nav.nav-pills.mr-auto(ld="tabbar")
+            li.nav-item: a.nav-link.active(ld="tabbar-tab default",data-name="basic") 基本資訊
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="config") 階段
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="perm") 權限
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="form") 提案表
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="analysis") 視覺統計
           ul.navbar-nav.ml-auto
             li.nav-item: a.nav-link(href="/org/dashboard.html") 組織設定
-      include config.pug
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="config")
+        .card-body: .p-4: +config-panel
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="perm")
+        .card-body: .p-4: +permission-panel
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="form")
+        .card-body: .p-4: +scope("activity-form")
+          h4 提案表
+          p.text-sm.text-muted 您可以在這裡設定提案 / 報名時，提案人所需要提交的表格。
+          hr.my-4
 
-      +scope("board-create").card.shadow-sm.mb-4: .card-body: .p-4
-        h2 編輯活動
-        hr.my-4
-        +edit-entry({title: "活動名稱"}): +edit-text({name: "title"})
-        +edit-entry({title: "活動代碼"}): +edit-text({name: "slug"})
-        +edit-entry({title: "活動摘要"}): +edit-moretext({name: "description"})
-        .row
-          .col-md: +edit-entry({title: "開始時間"}): +edit-date({name: "starttime"})
-          .col-md: +edit-entry({title: "結束時間"}): +edit-date({name: "endtime"})
-        //-+edit-entry({title: "活動滿版圖 ( 1200 x 800 px )"}): +edit-image({name:"fullimg"})
-        +edit-entry({title: "活動橫幅 ( 1200 x 200 px )"}): +edit-image({name:"banner"})
-        +edit-entry({title: "活動縮圖 ( 200 x 200 px )"}): +edit-image({name:"avatar"})
-        hr.my-4
-        .btn.btn-primary.disabled(ld="submit") 更新資料
 
-      +nbr(2)
-      .card.w-100.mb-4: .card-body
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf(ld="tabbar-panel default",data-name="basic")
+        .card-body: .p-4: +scope("activity-basic")
+          h4 基本資訊
+          p.text-sm.text-muted 您可以在這裡為設定整個活動的通用資訊，例如名稱、簡介、主視覺、活動時間等等。
+          hr.my-4
+          .row.align-items-center.mb-4
+            .col-md-3.text-right 活動名稱
+            .col-md: input.form-control.border-bottom.rounded-0(style="border:0")
+          .row.align-items-center.mb-4
+            .col-md-3.text-right 活動代碼
+            .col-md: input.form-control.border-bottom.rounded-0(style="border:0")
+          .row.align-items-start.mb-4
+            .col-md-3.text-right 活動摘要
+            .col-md: textarea.form-control(rows="4")
+          .row.align-items-center.mb-4
+            .col-md-3.text-right 起迄時間
+            .col-md
+              .d-flex.align-items-center
+                input.form-control.border-bottom.rounded-0(style="border:0")
+                .text-sm.mx-2 至
+                input.form-control.border-bottom.rounded-0(style="border:0")
+          .row.align-items-start.mb-4
+            .col-md-3.text-right 活動主圖
+            .col-md: .w-100: .aspect-ratio.ratio-2by1.bg-secondary.rounded.overflow-hidden
+              .vertical-center.bg-semi-dark: .w-100.text-center: .btn.btn-outline-light.btn-upload 上傳 #[input(type="file")]
+          .row.align-items-center.mb-4
+            .col-md-3.text-right 所屬組織
+            .col-md
+              select.form-control
+                option 無
 
-        h4 權限設定
-        .text-muted.text-sm.mb-4 權限設定讓您指派特定用戶來協助您管理維護您的組織、活動與用戶提案。我們已經預建了數種不同的角色，您可以依需求指派用戶到這些角色之中。
+          hr.my-4
+          .d-flex.justify-content-end
+            div: .btn.btn-primary.disabled(ld="submit") 更新資料
 
-        ul.nav.nav-tabs.mb-4
-          li.nav-item: a.nav-link.active 管理員
-          li.nav-item: a.nav-link 工作人員
-          li.nav-item: a.nav-link 協作
-          li.nav-item: a.nav-link 黑名單
-          li.nav-item: a.nav-link 詳細清單
-          li.nav-item.flex-grow-1.text-right: a.nav-link.text-muted.border-0 新增 +
-
-        .px-4
-          .text-muted.mb-4 擁有管理此活動的所有權限，包含設定權限、更改任何設定等。
-          .d-flex.flex-wrap.justify-content-between
-            each i in [1,2,3,4,5]
-              .d-flex.align-items-center.mr-4.mb-4.pr-4
-                .mr-2(style="width:32px"): .aspect-ratio.ratio-1by1.bg-dark.rounded
-                div
-                  b.mr-2 Kirby Wu
-                  i.i-close.text-danger
-            //-each i in [1,2,3,4,5]
-              .d-flex.align-items-center.mr-4.mb-4.pr-4
-                .mr-2(style="width:64px"): .aspect-ratio.ratio-1by1.bg-dark.rounded
-                div
-                  b Kirby Wu
-                  .text-muted.dropdown-toggle 管理員
-            //-.mr-2.rounded.border(style="height:64px;width:128px").px-4: .vertical-center 新增
-          .btn.btn-outline-primary 新增 .. 
-
-        //-.d-flex.align-items-center
-          .mr-2(style="width:48px"): .aspect-ratio.ratio-1by1.bg-dark.rounded
-          .font-weight-bold.flex-grow-1 Kirby Wu
-          .dropdown
-            .btn.btn-outline-secondary 管理員
-            .dropdown-menu
-        br
-        //-.d-flex.flex-wrap.justify-content-between
-          each i in [1,2,3,4,5]
-            .d-flex.align-items-center.mr-4.mb-4.pr-4
-              .mr-2(style="width:64px"): .aspect-ratio.ratio-1by1.bg-dark.rounded
-              div
-                b Kirby Wu
-                .text-muted.dropdown-toggle 管理員
-        +nbr(2)
-        //-.typeset
-          h4 管理員
-          hr.my-2
-          p 擁有管理此活動的所有權限，包含設定權限、更改任何設定等。
-          h4 工作人員
-          hr.my-2
-          p 可以設定活動資訊，審核留言與提案。
-          h4 協作
-          hr.my-2
-          p 留言會被特別標註。
-          h4 黑名單
-          hr.my-2
-          p 帳號鎖定，無法留言、提案或任何其它互動。
-      .card.w-100.mb-4: .card-body
-        .d-flex.w-50.ml-auto
-          input.form-control.mr-2(type="date")
-          input.form-control(type="date")
-        img(src="/assets/img/c/chart/line.svg")
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="analysis"): .card-body: .p-4
+        +scope("activity-analysis")
+          h4 視覺統計
+          p.text-sm.text-muted 透過圖表與數據概略的了解目前活動進展、完成度與用戶參與的情形。
+          hr.my-4
+          .d-flex.w-100.mb-4
+            input.form-control.mr-2(type="date")
+            input.form-control(type="date")
+          img.w-100(src="/assets/img/c/chart/line.svg")
 
 
 block script
   +script("/js/edit.js")
   +script("/js/modules/board/index.js")
+  +script("/assets/lib/ctrlz/ctrlz.bundle.min.js")
+  +script("/js/activity/config.js")
+  +script("/js/activity/perm.js")
+  +script("/js/activity/tabbar.js")

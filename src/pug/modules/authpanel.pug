@@ -6,13 +6,13 @@ mixin authpanel
       .position-absolute.w-100.h-100.bg-semi-dark(style="top:0;left:0")
       .text-left.position-relative.z-float.text-shadow
         .d-none(data-info="failed")
-          h2.mb-4.font-weight-bold Login Failed.
-          p You might have signed up with another email / password before. please try:
+          h2.mb-4.font-weight-bold 登入失敗。
+          p 您之前可能用的是別組帳號或密碼，或者使用不同的登入方式。您可以試著：
           ul
-            li try other password / login methods
-            li check spelling in your email
-            li #[a(href="/auth/reset/",style="color:#0ff",target="_blank") reset your password]
-            li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');",style="color:#0ff") contact us] directly
+            li 換一組帳號、密碼或登入方式
+            li 確認您的 email 或密碼沒有打錯
+            li #[a(href="/auth/reset/",style="color:#0ff",target="_blank") 重設密碼]
+            li #[a(href="#",onclick="lda.ldcvmgr.toggle('contact');",style="color:#0ff") 與我們聯絡]
 
         div(data-info="default")
           if block
@@ -35,15 +35,15 @@ mixin authpanel
           .form-group
             label 電子郵件
             input.form-control.form-control-sm(name="email",placeholder="電子郵件即您的帳號名稱")
-            .invalid-feedback not a valid email
+            .invalid-feedback 無效的電子郵件
           .form-group(data-show="signup")
             label 顯示名稱
             input.form-control.form-control-sm(name="displayname",placeholder="例如：王小明")
-            .invalid-feedback should not be empty
+            .invalid-feedback 不能留白
           .form-group
             label 密碼
             input.form-control.form-control-sm(name="passwd",placeholder="密碼，至少八個字元",type="password")
-            .invalid-feedback invalid password
+            .invalid-feedback 不合格的密碼
           .form-group
             .text-center.form-text.text-muted.small
               | 登入即表示您同意我們的 #[a(href="/tos/",target="_blank") 用戶條款] 與 #[a(href="/privacy/",target="_blank") 隱私權政策]
