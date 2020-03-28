@@ -1,0 +1,76 @@
+.ldcvmgr.ldcv(data-name="validator"): .base: .inner.card.mb-4.shadow: .card-body
+  h4 內容審查
+  p 設定檢查的條件，讓答覆僅有在符合條件時才能被送出。
+  hr
+  .py-3
+
+    .d-flex
+      select.form-control.mr-2
+        option 字數
+        option 數字
+        option 內容
+      select.form-control.mr-2
+        option 大於
+        option 小於
+      input.form-control.mr-2
+      input.form-control(placeholder="錯誤訊息")
+      .btn.btn-text: i.i-close
+    .mt-2: a(href="#") 增加條件 ...
+  hr
+  .text-right: .btn.btn-outline-secondary(data-ldcv-set="") 完成
+
+mixin card
+  .question.card.shadow-sm.mb-4: .card-body: .p-2
+    +head
+    block
+
+mixin head
+  .d-flex
+    .flex-grow-1
+      h2.mb-0 問題的標題
+      p.text-muted 關於這個問題的一個簡短的描述
+
+    .ctrl: .btn-group
+      .btn.btn-sm.btn-outline-secondary 必填
+      .btn.btn-sm.btn-outline-secondary(onclick="lda.ldcvmgr.toggle('validator')") 條件..
+      .btn.btn-sm.btn-outline-secondary: i.i-clone
+      .btn.btn-sm.btn-outline-secondary: i.i-close
+
+.d-flex
+  .flex-grow-1
+    +card
+      input.form-control.rounded-0(style="border-width:0 0 1px 0",placeholder="請在這裡輸入...")
+    +card
+      textarea.form-control(rows="5",placeholder="請在這裡輸入...")
+    +card
+      .btn.btn-outline-primary.btn-upload #[span 上傳檔案 ...]#[input(type="file")]
+
+    +card
+      each i in [1,2,3,4,5]
+        .form-check
+          input.form-check-input(type="radio",name="radio")
+          label.form-check-label 選項 #{i}
+      
+    +card
+      each i in [1,2,3,4,5]
+        .form-check
+          input.form-check-input(type="checkbox",name="checkbox")
+          label.form-check-label 選項 #{i}
+
+    +card
+      .row(repeat-host)
+        each i in [1,2,3,4,5]
+          .col-md.text-center(repeat-item)
+            div #{i}
+            input.mr-0(type="radio",name="radio")
+
+  .ml-4
+    .sticky
+      .list-group.shadow-sm
+        .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="short-answer") #[i.i-doc] 短答
+        .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="long-answer") #[i.i-doc] 申論
+        .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="linear-scale") #[i.i-doc] 給分
+        .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="checkbox") #[i.i-doc] 單選
+        .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="radio") #[i.i-doc] 多選
+        .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="file") #[i.i-doc] 傳檔
+

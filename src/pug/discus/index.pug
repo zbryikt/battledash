@@ -4,6 +4,23 @@ block vars
   - ctrl.navtop.shown = false;
 block head
   +css("https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.31.4/dist/tagify.css")
+  style(type="text/css"): :stylus
+    .comment:hover
+      background: #f9fafb
+      .ctrl
+        display: block
+    .comment .ctrl
+      display: none
+    .comment .content > *:last-child
+      margin-bottom:0!important
+    .comment .content
+      padding: .25em 0
+    .thread
+      padding-left: 4.25em!important
+      .avatar
+        width: 2.5em!important
+
+
 block body
   .card.w-1024.rwd.mx-auto.m-4: .card-body
     h4 討論、留言介面
@@ -26,28 +43,51 @@ block body
       li 全活動留言管理
       li 留言狀況視覺化？
   .w-1024.rwd.mx-auto.p-4.m-4
-    mixin comment
-      .media.mb-4.pb-4
-        div.mr-2(style="width:48px"): .aspect-ratio.ratio-1by1.rounded.bg-dark.w-100
+    mixin comment(opt)
+      - if(!opt) opt = {}
+      .comment.media.mb-2.p-2.position-relative(class=opt.class)
+        .btn-group.position-absolute.shadow-sm.bg-white.ctrl(style="top:-.75em;right:1em")
+          .btn.btn-sm.btn-outline-secondary #[i.i-heart]
+          .btn.btn-sm.btn-outline-secondary #[i.i-clone]
+          .btn.btn-sm.btn-outline-secondary #[i.i-pen]
+          .btn.btn-sm.btn-outline-secondary #[i.i-lock]
+          .btn.btn-sm.btn-outline-secondary #[i.i-close]
+
+        .avatar.mr-2(style="width:3.25em"): .aspect-ratio.ratio-1by1.rounded.bg-dark.w-100
         .media-body
           .d-flex.align-items-end.mb-2
             b.my-0(style="line-height:1em") 劉德華
             .text-sm.text-muted.ml-1 ．g0v 揪松團
             .text-sm.text-muted.ml-1 ．2019/08/10
-            .text-sm.text-muted.ml-1 ．回覆
-          block 
+            //-.text-sm.text-muted.ml-1 ．回覆
+          .content.my-1: block 
+          //-.d-flex.text-muted
+            .mr-1 #[i.i-dart-up]
+            .mr-1 | #[i.i-dart-down]
+            .mr-1 ．回覆
+          if opt.more
+            a.d-flex.align-items-center(href="#")
+              div.mr-1(style="width:1em"): .aspect-ratio.ratio-1by1.rounded-sm.bg-dark.w-100
+              div.mr-1(style="width:1em"): .aspect-ratio.ratio-1by1.rounded-sm.bg-dark.w-100
+              div 四則回覆
+    .media.mb-4.p-2.position-relative
+      .avatar.mr-2(style="width:3.25em"): .aspect-ratio.ratio-1by1.rounded.bg-dark.w-100
+      .media-body
+        textarea.form-control.mb-2(rows="4")
+        .d-flex
+          .flex-grow-1.d-flex
+            .mr-2: i.i-doc
+            .mr-2: i.i-doc
+            .mr-2: i.i-doc
+          div
+            .btn.btn-outline-secondary 送出留言
 
     each i in [1,2,3,4,5,6,7]
-      +comment
+      +comment({class: (i>3?"thread":""), more:(i==1?true:false)})
         if i < 3 || i > 3
           p 若有待補充內容，請記得在今天（1/15）23:59 前補齊提案。
         if i == 3
-          p Hi, Johnson 你好!
-          p 我也遇過要A給B，原來不只是我 XD
-          p 初步希望能把小幫手開發成Chrome Extension，不知是否可行。處理後的政府開放資料回應作為開放資料釋出
-          .btn.btn-sm.btn-outline-secondary 一個回覆
+          div Hi, Johnson 你好! 我也遇過要A給B，原來不只是我 XD
+          div 初步希望能把小幫手開發成Chrome Extension，不知是否可行。處理後的政府開放資料回應作為開放資料釋出
+          //-.btn.btn-sm.btn-outline-secondary 一個回覆
 
-
-    textarea.form-control.mb-2(rows="4")
-    .text-right
-      .btn.btn-outline-secondary 送出留言
