@@ -1,7 +1,7 @@
 //- module
 doctype html
 include /../../static/assets/ldui/pug/ldui.pug
-- var ctrl = {cover: {authpanel: true}, navtop: {placeholder: true, shown: true}, foot: {}, carbon: {}}
+- var ctrl = {cover: {authpanel: true}, navtop: {placeholder: true, shown: true}, foot: {shown: true}, carbon: {}}
 - var vars = {root: ""}
 block vars
 html
@@ -26,7 +26,8 @@ html
     style="position:fixed;bottom:0;right:10px;border-radius:5px 5px 0 0"): a.text-light(href="#") Dev Note
     if ctrl.cover.authpanel
       include /modules/cover/authpanel.pug
-    include /modules/foot.pug
+    if ctrl.foot.shown
+      include /modules/foot.pug
     +script("/js/pack/vendor.min.js")
     +script("/assets/lib/flatpickr/flatpickr.min.js")
     +script("/assets/xfl/xfl.js")
