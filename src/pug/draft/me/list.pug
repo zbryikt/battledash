@@ -1,0 +1,100 @@
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = true;
+  - ctrl.navtop.shown = true;
+  - ctrl.navtop.className = "navbar-light bg-semi-light";
+block body
+  //-.w-768.mx-auto.rwd.typeset.heading-contrast.p-4
+    h2 組織列表
+    h2 活動列表
+    h2 評審資訊
+    ul
+      li: a(href="#") 第三次公民科技獎助金
+    h2 我的提案
+    h3 我的某個組織
+    .btn.btn-outline-dark.mr-2 瀏覽主頁
+    .btn.btn-outline-dark 主控台
+
+
+
+  .w-1024.mx-auto.d-flex
+    .p-4
+      .sticky
+        .mx-auto.my-4(style="width:128px"): .rounded.bg-dark.aspect-ratio.ratio-1by1.ldlz(data-src="/assets/img/misc/avatar.png")
+        .text-center
+          .text-lg.text-center: b Marrt Jane
+          .text-muted Designer
+          .text-muted.text-sm joined 2016/05
+          br
+          .list-group
+            a.list-group-item.text-dark(href="/user/") 我的頁面
+            a.list-group-item.text-dark(href="/user/settings.html") 我的設定
+
+    .p-4.flex-grow-1
+      ul.nav.nav-pills.mb-4
+        li.nav-item
+          a.nav-link.active.d-flex.align-items-center(href="#")
+            span 評選
+            .badge.badge-danger.ml-2 10
+        li.nav-item
+          a.nav-link(href="#") 組織
+        li.nav-item
+          a.nav-link(href="#") 活動
+        li.nav-item
+          a.nav-link(href="#") 提案
+        li.nav-item
+          a.nav-link(href="#") 追蹤
+        li.nav-item
+          a.nav-link(href="#") 貢獻
+        li.nav-item
+          a.nav-link(href="#") 評論
+      .card.shadow-sm.mb-2: .card-body.p-3
+        .d-flex
+          .mr-2(style="width:4em"): .aspect-ratio.ratio-1by1.bg-dark
+          .flex-grow-1
+            h5.font-weight-bold.mb-2 2019 春季公民科技獎助金
+            .d-flex
+              .flex-grow-1.mr-2.px-2.py-1.bg-light.rounded
+                span 評選期間: 2020/04/04 - 2020/04/06
+              div
+                .btn.btn-sm.btn-outline-primary.mr-2 評選表
+                .btn.btn-sm.btn-outline-primary.mr-2 決選總表
+                .btn.btn-sm.btn-outline-primary 資格審核表
+
+      .card.shadow-sm.mb-2: .card-body.p-3
+        .d-flex
+          .mr-2(style="width:4em"): .aspect-ratio.ratio-1by1.bg-dark
+          .flex-grow-1
+            h5.font-weight-bold.mb-2 零時政府揪松團
+            .d-flex
+              .flex-grow-1.mr-2.px-2.py-1.bg-light.rounded
+                span 進行中活動：2019 春季公民科技獎助金
+              div
+                .btn.btn-sm.btn-outline-primary.mr-2 瀏覽主頁
+                .btn.btn-sm.btn-outline-primary.mr-2 活動列表
+                .btn.btn-sm.btn-outline-primary 主控台
+
+      .card.shadow-sm.mb-2: .card-body.p-3
+        .d-flex
+          .mr-2(style="width:4em"): .aspect-ratio.ratio-1by1.bg-dark
+          .flex-grow-1
+            h5.font-weight-bold.mb-2 2019 春季公民科技獎助金
+            .d-flex
+              .flex-grow-1.mr-2.px-2.py-1.bg-light.rounded
+                span 活動期間：2020/04/04 - 2020/04/06
+              div
+                .btn.btn-sm.btn-outline-primary.mr-2 瀏覽主頁
+                .btn.btn-sm.btn-outline-primary.mr-2 活動列表
+                .btn.btn-sm.btn-outline-primary 主控台
+
+      .card.shadow-sm.mb-2: .card-body.p-3
+        .d-flex
+          .mr-2(style="width:4em"): .aspect-ratio.ratio-1by1.bg-dark
+          .flex-grow-1
+            h5.font-weight-bold.mb-2 提案小幫手
+            .d-flex
+              .flex-grow-1.mr-2.px-2.py-1.bg-light.rounded
+                span 這個提案是希望我們可以利用一些現代的網頁技 ...
+              div
+                .btn.btn-sm.btn-outline-primary.mr-2 瀏覽提案
+                .btn.btn-sm.btn-outline-primary 編輯提案
