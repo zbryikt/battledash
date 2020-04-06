@@ -1,0 +1,56 @@
+extends /base.pug
+block head
+  +css("https://cdn.jsdelivr.net/npm/handsontable@6.2.2/dist/handsontable.min.css")
+  style(type="text/css"): :stylus
+    .handsontable
+      font-size: 14px
+      td, th
+        vertical-align: middle
+        text-align: center
+block body
+  .h-100.w-100: .vertical-center: .w-100.text-center
+    .card.w-640.mx-auto(style="height:480px"): .card-body
+      .d-flex.flex-column.h-100.w-100
+        .d-flex.flex-grow-1.w-100.h-100
+          .position-relative.border.bg-dark.h-100(style="flex:3 0 auto")
+            #example.w-100.h-100.position-absolute(style="overflow:scroll")
+
+  block script
+    +script("https://cdn.jsdelivr.net/npm/handsontable@6.2.2/dist/handsontable.min.js")
+    script: :lsc
+      data = [
+        ['',"王小明","陳大華","黃小春","吳小光"]
+        ["創意",47,97,14,45]
+        ["技術",59,60,79,27]
+        ["完整度",24,31,68,44]
+        ["設計",56,20,75,97]
+        ["協作度",85,97,40,77]
+        ["總分",68,76,69,73]
+        ["排名",54,70,10,7]
+      ]
+
+      dom = ld$.find document, '#example', 0
+      Handsontable.renderers.registerRenderer \myrenderer, (instance, td, row, col, prop, value, cellProperties) -> 
+        Handsontable.renderers.TextRenderer.apply @, arguments
+        if isNaN(value) or !value => return
+        if +value < 30 => td.style.background = \#9f9
+        if +value > 80 => td.style.background = \#f99
+
+      hot = new Handsontable dom, {
+        data: data
+        rowHeaders: true
+        colHeaders: true
+        filters: true
+        dropdownMenu: true
+        stretchH: \all
+        rowHeights: 25
+        minRows: 10
+        minCols: 8
+        colWidths: 60,
+        fixedRowsTop: 1,
+        fixedColumnsLeft: 1
+        cells: (row, col) ->
+          cellProperties = {}
+          cellProperties.renderer = \myrenderer
+          return cellProperties
+      }

@@ -1,0 +1,100 @@
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = true;
+  - ctrl.navtop.shown = true;
+  - ctrl.navtop.className = "navbar-light text-dark bg-white"
+  style(type="text/css"): :stylus
+    .question .ctrl
+      display: none
+    .question:hover .ctrl
+      display: block
+block body
+  include ../activity/mixins/index.pug
+  br
+  .w-1024.mx-auto
+    .text-muted 提案
+    h1.mt-0 資料申請小幫手
+    .pb-4: hr
+    .d-flex
+      div
+        .mb-2(style="width:12em"): .aspect-ratio.ratio-1by1.rounded(style="background-image:url(https://grants.g0v.tw/uploads/9b66d70a351a0ca281968de84db80053.png);background-size:cover")
+        .mb-4
+          .font-weight-bold 提案人
+          a(href="#") shuchen chang
+        .mb-4
+          .font-weight-bold 關注中
+          div: a(href="#") chewei liu
+          div: a(href="#") peggy liu
+          div: a(href="#") yellow soar
+        .mb-4
+          .font-weight-bold 修改紀錄
+          div: a(href="#") 兩個月前
+      .pb-4.pl-4
+        .ldcvmgr.ldcv(data-name="validator"): .base: .inner.card.mb-4.shadow: .card-body
+          h4 內容審查
+          p 設定檢查的條件，讓答覆僅有在符合條件時才能被送出。
+          hr
+          .py-3
+
+            .d-flex
+              select.form-control.mr-2
+                option 字數
+                option 數字
+                option 內容
+              select.form-control.mr-2
+                option 大於
+                option 小於
+              input.form-control.mr-2
+              input.form-control(placeholder="錯誤訊息")
+              .btn.btn-text: i.i-close
+            .mt-2: a(href="#") 增加條件 ...
+          hr
+          .text-right: .btn.btn-outline-secondary(data-ldcv-set="") 完成
+
+        mixin card(title,desc)
+          .question.card.mb-2.border-0: .card-body.px-0: .px-0
+            +head(title,desc)
+            block
+
+        mixin head(title,desc)
+          .d-flex
+            .flex-grow-1
+              h4.mb-0 #{title || '問題的標題'}
+              p.text-muted #{desc || '關於這個問題的一個簡短的描述'}
+
+            .ctrl: .btn-group
+              .btn.btn-sm.btn-outline-secondary 必填
+              .btn.btn-sm.btn-outline-secondary(onclick="lda.ldcvmgr.toggle('validator')") 條件..
+              .btn.btn-sm.btn-outline-secondary: i.i-clone
+              .btn.btn-sm.btn-outline-secondary: i.i-close
+
+        .d-flex
+          .flex-grow-1
+            +card("你需要多少錢?", "30 ~ 50 萬之間")
+              input.form-control.rounded-0(style="border-width:0 0 1px 0",value="500000")
+            +card("提案者簡介", "請簡短地 ( 100 字以內 ) 介紹提案者")
+              textarea.form-control.
+                張淑貞，參與農地污染和違章工廠資料開放推動及應用。
+                劉哲瑋，參與 g0v 公有地相關議題專案。
+            +card("提案者在專案中的角色", "請簡述提案者在專案中的角色（例如：專案經理、全端工程師、顧問等）、專案成員與團隊背景介紹。（團隊現在有什麼人才？還需要什麼人才？）")
+              textarea.form-control(rows="10").
+                團隊成員
+                1.張淑貞，專案管理執行。
+                2.劉哲瑋，企劃執行、研究分析。
+                3.york，工程師、資料蒐集分析。
+                4..高英勛， 工程師、專案顧問。
+
+                需要人才
+                1.資料工程師，建置資料申請關鍵字工具及資訊呈現。
+                2.使用者介面設計者，規劃便於目標對象使用的介面。
+            +card("個人動機", "你為什麼要做這個計劃（個人動機）？ 200 ~ 500 字")
+              textarea.form-control(rows="10").
+                開放資料，是政府公平透明治理的第一步。目前中央的政府資料開放平台 (data.gov.tw) 公開民眾申請資料及政府機關回覆內容，這點其實已很進步，但還有進步空間，例如民眾申請常被駁回，平台本身也沒有進一步統整民眾申請資料的結果，導致前人經驗很難提供後面申請者參考。另外，民眾收到政府駁回開放資料的原因後，也不知該如何處理或進一步要求，可能就此打住。
+
+                如果有一個資料庫工具，可在申請資料前，提供過去已經開放或建議開放的情形，就可以幫助申請者對官方回應做出更有效的解讀及應對。透過「資料申請小幫手」所提供的功能，資料申請者可以了解其他申請者的經驗，建立開放資料民間社群的共通感，一方面讓開放資料新參者延續關注熱度，而不因為官方公文用語回覆內容所致使的難解與挫折感而放棄；另一方面，更具體的找出「官」與「民」意見交流之中，實際上可以進一步促成開放資料化的公共政策主題。
+
+                透過資料申請小幫手，建構正向互動的資料申覆經驗。
+
+
+
+block script

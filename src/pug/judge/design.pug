@@ -1,0 +1,19 @@
+extends /base.pug
+block head
+  style(type="text/css"): :stylus
+    .table th, .table td
+      padding: .2em
+block body
+  -
+    var headers = [
+      "編號", "初審", "提案", "簡述", "分類", "影響力", "可重覆", "可行性", "完成度", "總分", "排名", "評論"
+    ];
+  .d-flex.h-100
+    .flex-grow-1.h-100.mr-2.w-50
+      table.table.table-bordered
+        tr
+          each h in headers
+            th #{h}
+    .flex-grow-1.h-100.ml-2.w-50
+      .card.w-100.h-100: .card-body
+        h1 hello

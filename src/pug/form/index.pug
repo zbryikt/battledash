@@ -36,16 +36,16 @@ block body
         hr
         .text-right: .btn.btn-outline-secondary(data-ldcv-set="") 完成
 
-      mixin card
+      mixin card(title,desc)
         .question.card.shadow-sm.mb-4: .card-body: .p-2
-          +head
+          +head(title,desc)
           block
 
-      mixin head
+      mixin head(title,desc)
         .d-flex
           .flex-grow-1
-            h2.mb-0 問題的標題
-            p.text-muted 關於這個問題的一個簡短的描述
+            h4.mb-0 #{title || '問題的標題'}
+            p.text-muted #{desc || '關於這個問題的一個簡短的描述'}
 
           .ctrl: .btn-group
             .btn.btn-sm.btn-outline-secondary 必填
@@ -55,6 +55,15 @@ block body
 
       .d-flex
         .flex-grow-1
+          +card("你需要多少錢?", "30 ~ 50 萬之間")
+            input.form-control.rounded-0(style="border-width:0 0 1px 0",value="500000")
+          +card("提案者簡介", "請簡短地 ( 100 字以內 ) 介紹提案者")
+            textarea.form-control.
+              張淑貞，參與農地污染和違章工廠資料開放推動及應用。
+              劉哲瑋，參與 g0v 公有地相關議題專案。
+
+
+
           +card
             input.form-control.rounded-0(style="border-width:0 0 1px 0",placeholder="請在這裡輸入...")
           +card
