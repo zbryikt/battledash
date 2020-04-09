@@ -1,0 +1,60 @@
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = true;
+  - ctrl.navtop.shown = true;
+  - data = {}
+  -
+    data.prj = {
+      id: 123,
+      name: "台灣神手計畫",
+      owner: 123,
+      ownerName: "神手健",
+      description: "台灣神手致力發展適合台灣人的開源義肢，並將程式碼、3D檔案、電路佈局開源於”台灣神手開源義肢“網站"
+    }
+block body
+  include /design/mixins/index.pug
+  .w-1024.rwd.mx-auto.p-4
+    .typeset.headling-contrast
+      .d-flex
+        .mr-4.pr-4
+          .pb-4.mb-4.h-100
+            +prj-card-sm(data.prj).shadow-sm.mb-4
+            .mb-4.text-center
+              div
+                .btn.btn-sm.btn-primary.mr-2.rounded-pill.px-3 分享 #[i.i-link]
+                .btn.btn-sm.btn-primary.rounded-pill.px-3 追蹤 #[i.i-eye]
+            hr
+
+            .sticky(style="width:250px")
+              .mb-4
+                .d-flex.align-items-center.mb-2
+                  .flex-grow-1 編輯紀錄 
+                  .text-sm.text-success.ld.ld-fall-ttb-in 已自動存檔.
+                select.form-control
+                  option 2020/04/08 12:30:12
+                  option 2020/04/08 12:30:11
+                  option 2020/04/08 12:30:02
+                  option 2020/04/08 12:20:12
+                  option 2020/04/08 11:10:54
+                  option 2020/04/06 04:52:15
+              //- shown in view mode
+              //-.mb-4
+                .btn.btn-block.btn-primary 編輯提案 #[i.i-pen]
+              //- shown in edit mode
+              .mb-4
+                .d-flex.align-items-center.mb2
+                  .flex-grow-1 編輯進度
+                  a.text-sm.text-danger(href="#") 跳至待編修項
+                .progress
+                  .progress-bar.progress-bar-striped.progress-bar-animated(style="width:30%")
+              .mb-4
+                label.mb-1 提案人
+                div: +user.mr-2
+
+              .mb-4
+                label.mb-1 追蹤者
+                .d-flex.flex-wrap
+                  each i in [1,2,3,4,5]
+                    +user.mr-2
+
+        +scope("project-edit").flex-grow-1

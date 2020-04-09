@@ -52,5 +52,15 @@ mixin form-radio(opt)
   +form-card(opt)&attributes(attributes)
     each item in opt.values
       .d-flex.align-items-center.my-1
-        input.w-100.z-float(type="radio",style="height:1.5em;margin-top:-2px",name=opt.name)
+        input.w-100.z-float(type="radio",style="height:1.5em;margin-top:-2px",name=opt.name,value=item)
         .position-absolute(style="margin-left:1.5em") #{item}
+
+mixin form-answer(opt)
+  //-+form-card(opt)&attributes(attributes)
+  .mb-4.pb-4
+    .d-flex.mb-2
+      .flex-grow-1
+        .mb-0(style="font-weight:500;font-size:1em") #{opt.title || '問題的標題'}
+        .text-muted.text-sm(style="font-weight:200") #{opt.description || '關於這個問題的一個簡短的描述'}
+    //-+form-head(opt)
+    .pl-3.border-left.border-secondary(style="font-size:1.2em") #{opt.value}

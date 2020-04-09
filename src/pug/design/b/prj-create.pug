@@ -3,6 +3,7 @@ block vars
   - ctrl.navtop.placeholder = true;
   - ctrl.navtop.shown = true;
   - data = {}
+  - view = true;
   -
     data.prj = {
       id: 123,
@@ -18,40 +19,46 @@ block vars
         title: "專案名稱",
         name: "name",
         description: "請填入您的提案名稱 ( 20 字以內 )",
-        type: "short-answer"
+        type: "short-answer",
+        value: "台灣神手計畫"
       },
 
       {
         title: "專案簡介",
         name: "brief",
         description: "請以簡短且非專業人士也能理解的方式介紹此專案。 ( 200 ~ 500 字 )",
-        type: "long-answer"
+        type: "long-answer",
+        value: "台灣神手致力發展適合台灣人的開源義肢，並將程式碼、3D檔案、電路佈局開源於”台灣神手開源義肢“網站 "
       },
 
       {
         title: "你需要多少錢？",
         name: "money",
-        description: "（30 ~ 50 萬之間）",
-        type: "short-answer"
+        description: "( 30 ~ 50 萬之間 )",
+        type: "short-answer",
+        value: "30 萬"
       },
 
       {
         title: "提案者簡介",
         name: "owner",
         description: "請簡短的介紹提案成員 ( 80 ~ 120 字 )",
-        type: "long-answer"
+        type: "long-answer",
+        value: "張淑貞，參與農地污染和違章工廠資料開放推動及應用。劉哲瑋，參與 g0v 公有地相關議題專案。"
       },
       {
         title: "團隊成員簡介",
         name: "team",
         description: "請簡述提案者在專案中的角色（例如：專案經理、全端工程師、顧問等）、專案成員與團隊背景介紹。（團隊現在有什麼人才？還需要什麼人才？）",
-        type: "long-answer"
+        type: "long-answer",
+        value: "需要人才 : 1.資料工程師，建置資料申請關鍵字工具及資訊呈現。 2.使用者介面設計者，規劃便於目標對象使用的介面。"
       },
       {
         title: "個人動機",
         name: "motivation",
         description: "你為什麼要做這個計劃（個人動機）？",
-        type: "long-answer"
+        type: "long-answer",
+        value: "開放資料，是政府公平透明治理的第一步。目前中央的政府資料開放平台 (data.gov.tw) 公開民眾申請資料及政府機關回覆內容，這點其實已很進步，但還有進步空間，例如民眾申請常被駁回，平台本身也沒有進一步統整民眾申請資料的結果，導致前人經驗很難提供後面申請者參考。另外，民眾收到政府駁回開放資料的原因後，也不知該如何處理或進一步要求，可能就此打住。"
       },
       {
         title: "相關文件",
@@ -64,7 +71,8 @@ block vars
         name: "category",
         description: "依獎助金的主題方向畫分的話，本計畫屬於哪個分類？",
         values: ["開放政府","新媒體","公共服務","開放資料","社會參與","基礎建設"],
-        type: "radio"
+        type: "radio",
+        value: "開放資料"
       }
     ]
 
@@ -78,10 +86,7 @@ block head
       border-left: 5px solid #f00
       position: relative
 block body
-  include /edit/index.pug
   include /design/mixins/index.pug
-  //include /project/mixin.pug
-  //include /project/create.pug
   .w-1024.rwd.mx-auto.p-4
     .ldcv.ldcvmgr(data-name="dev-note"): .base: .inner.card: .card-body: .p-4
       h5 專案編輯介面
@@ -95,16 +100,16 @@ block body
         li multiple choice
       p 所需欄位可參考 ldEditor 的設計, 使用一個 config object 來準備. 該 config 可用於前後端
 
-    //-.btn.btn-outline-dark(onclick="lda.ldcvmgr.toggle('propose')") 建立提案 #[i.i-plus]
     .typeset.headling-contrast
       .d-flex
         .mr-4.pr-4
           .pb-4.mb-4.h-100
             +prj-card-sm(data.prj).shadow-sm.mb-4
             .mb-4.text-center
-              div
-                .btn.btn-sm.btn-primary.mr-2.rounded-pill.px-3 分享 #[i.i-link]
-                .btn.btn-sm.btn-primary.rounded-pill.px-3 追蹤 #[i.i-eye]
+              .d-flex.justify-content-center
+                .btn.btn-sm.btn-primary.rounded-pill.px-3.mx-1 分享 #[i.i-link]
+                .btn.btn-sm.btn-primary.rounded-pill.px-3.mx-1 追蹤 #[i.i-eye]
+                //-.btn.btn-sm.btn-primary.rounded-pill.px-3.mx-1 列印 #[i.i-print]
             hr
 
             .sticky(style="width:250px")
@@ -113,16 +118,25 @@ block body
                   .flex-grow-1 編輯紀錄 
                   .text-sm.text-success.ld.ld-fall-ttb-in 已自動存檔.
                 select.form-control
+                  option 2020/04/08 12:30:12
+                  option 2020/04/08 12:30:11
+                  option 2020/04/08 12:30:02
+                  option 2020/04/08 12:20:12
+                  option 2020/04/08 11:10:54
+                  option 2020/04/06 04:52:15
               //- shown in view mode
-              //-.mb-4
-                .btn.btn-block.btn-primary 編輯提案 #[i.i-pen]
+              if view
+                .mb-4
+                  .btn.btn-block.btn-primary 編輯提案 #[i.i-pen]
               //- shown in edit mode
-              .mb-4
-                .d-flex.align-items-center.mb2
-                  .flex-grow-1 編輯進度
-                  a.text-sm.text-danger(href="#") 跳至待編修項
-                .progress
-                  .progress-bar.progress-bar-striped.progress-bar-animated(style="width:30%")
+              else
+                .mb-4
+                  .d-flex.align-items-center.mb2
+                    .flex-grow-1 編輯進度
+                    a.text-sm.text-danger(href="#") 跳至待編修項
+                  .progress
+                    .progress-bar.progress-bar-striped.progress-bar-animated(style="width:30%")
+
               .mb-4
                 label.mb-1 提案人
                 div: +user.mr-2
@@ -134,19 +148,24 @@ block body
                     +user.mr-2
 
         +scope("project-edit").flex-grow-1
-          each item in data.schema
-            if item.type == "short-answer"
-              +form-short-answer(item)
-            else if item.type == "long-answer"
-              +form-long-answer(item).ok
-            else if item.type == "radio"
-              +form-radio(item)
-            else if item.type == "upload-file"
-              +form-upload-file(item)
-
-          .d-flex.align-items-center
-            .btn.btn-lg.btn-primary.mr-4.disabled(ld="submit") 儲存並發布
-            .text-sm.text-danger #[i.i-close] 在能發布之前，您尚有 5 個項目未完成。#[a.text-danger.text-underline(href="#") 跳至待編修項目]
+          if view
+            each item in data.schema
+              +form-answer(item)
+          else
+            each item in data.schema
+              if item.type == "short-answer"
+                +form-short-answer(item)
+              else if item.type == "long-answer"
+                +form-long-answer(item).ok
+              else if item.type == "radio"
+                +form-radio(item)
+              else if item.type == "upload-file"
+                +form-upload-file(item)
+          if view
+          else
+            .d-flex.align-items-center
+              .btn.btn-lg.btn-primary.mr-4.disabled(ld="submit") 儲存並發布
+              .text-sm.text-danger #[i.i-close] 在能發布之前，您尚有 5 個項目未完成。#[a.text-danger.text-underline(href="#") 跳至待編修項目]
 
           //-
             +form-short-answer
@@ -209,6 +228,7 @@ block body
             label 專案符合哪些要素？
             - values = ["多元","協作","開放","分享"]
             +edit-multiple({values: values, name: "component"})
+
           hr
           .d-flex.align-items-center
             .btn.btn-primary.mr-4(ld="submit") 儲存並發布
