@@ -1,7 +1,13 @@
 //- module
 doctype html
 include /../../static/assets/ldui/pug/ldui.pug
-- var ctrl = {cover: {authpanel: true}, navtop: {placeholder: true, shown: true}, foot: {shown: true}, carbon: {}}
+-
+  var ctrl = {
+    cover: {authpanel: true},
+    navtop: {placeholder: true, shown: true},
+    foot: {shown: true},
+    carbon: {}
+  }
 - var vars = {root: ""}
 block vars
 html
@@ -12,12 +18,19 @@ html
   include /edit/index.pug
   head
     meta(charset="utf-8")
+    link(href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,500,700|Roboto:400,700&display=swap",rel="stylesheet")
     +css("/assets/lib/flatpickr/flatpickr.min.css")
     +css("/assets/bootstrap/4.3.1/css/bootstrap.min.css")
     +css("/assets/ldui/ldui.min.css")
     +css("/css/index.css")
+    style(type="text/css"): :stylus
+      h1,h2,h3 { font-family: 'Noto Sans TC', serif!important }
+      h4,h5,h6 { font-family: Roboto, 'Noto Sans TC', sans-serif!important }
+      body .typeset, body, p { font-family: Roboto, 'Noto Sans TC', sans-serif!important } 
     block head
-  body
+  body(data-spy=(ctrl.scrollspy ? "scroll" : false),
+  data-target=(ctrl.scrollspy ? ctrl.scrollspy : false))
+
     +script("/js/pack/base.min.js")
     include modules/navtop.pug
     .ldNotify

@@ -1,0 +1,231 @@
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = true;
+  - ctrl.navtop.shown = true;
+  - data = {}
+  -
+    data.prj = {
+      id: 123,
+      name: "台灣神手計畫",
+      owner: 123,
+      ownerName: "神手健",
+      description: "台灣神手致力發展適合台灣人的開源義肢，並將程式碼、3D檔案、電路佈局開源於”台灣神手開源義肢“網站"
+    }
+  -
+    data.schema = [
+
+      {
+        title: "專案名稱",
+        name: "name",
+        description: "請填入您的提案名稱 ( 20 字以內 )",
+        type: "short-answer"
+      },
+
+      {
+        title: "專案簡介",
+        name: "brief",
+        description: "請以簡短且非專業人士也能理解的方式介紹此專案。 ( 200 ~ 500 字 )",
+        type: "long-answer"
+      },
+
+      {
+        title: "你需要多少錢？",
+        name: "money",
+        description: "（30 ~ 50 萬之間）",
+        type: "short-answer"
+      },
+
+      {
+        title: "提案者簡介",
+        name: "owner",
+        description: "請簡短的介紹提案成員 ( 80 ~ 120 字 )",
+        type: "long-answer"
+      },
+      {
+        title: "團隊成員簡介",
+        name: "team",
+        description: "請簡述提案者在專案中的角色（例如：專案經理、全端工程師、顧問等）、專案成員與團隊背景介紹。（團隊現在有什麼人才？還需要什麼人才？）",
+        type: "long-answer"
+      },
+      {
+        title: "個人動機",
+        name: "motivation",
+        description: "你為什麼要做這個計劃（個人動機）？",
+        type: "long-answer"
+      },
+      {
+        title: "相關文件",
+        name: "document",
+        description: "若有專案介紹的投影片，請提供",
+        type: "upload-file"
+      },
+      {
+        title: "主題分類",
+        name: "category",
+        description: "依獎助金的主題方向畫分的話，本計畫屬於哪個分類？",
+        values: ["開放政府","新媒體","公共服務","開放資料","社會參與","基礎建設"],
+        type: "radio"
+      }
+    ]
+
+block head
+  style: :stylus
+    .form-group
+      margin: 0 0 3rem
+    .form-group label
+      width: 100%
+    .card.ok
+      border-left: 5px solid #f00
+      position: relative
+block body
+  include /edit/index.pug
+  include /design/mixins/index.pug
+  //include /project/mixin.pug
+  //include /project/create.pug
+  .w-1024.rwd.mx-auto.p-4
+    .ldcv.ldcvmgr(data-name="dev-note"): .base: .inner.card: .card-body: .p-4
+      h5 專案編輯介面
+      p 此頁包含了提案可能會用到的各種元件, 包括:
+      ul
+        li slider
+        li markdown editor
+        li dropdown selector ( including additional input field )
+        li tag editor
+        li img uploader
+        li multiple choice
+      p 所需欄位可參考 ldEditor 的設計, 使用一個 config object 來準備. 該 config 可用於前後端
+
+    //-.btn.btn-outline-dark(onclick="lda.ldcvmgr.toggle('propose')") 建立提案 #[i.i-plus]
+    .typeset.headling-contrast
+      .d-flex
+        .mr-4.pr-4
+          .pb-4.mb-4.h-100
+            +prj-card-sm(data.prj).shadow-sm.mb-4
+            .mb-4.text-center
+              div
+                .btn.btn-sm.btn-primary.mr-2.rounded-pill.px-3 分享 #[i.i-link]
+                .btn.btn-sm.btn-primary.rounded-pill.px-3 追蹤 #[i.i-eye]
+            hr
+
+            .sticky(style="width:250px")
+              .mb-4
+                .d-flex.align-items-center.mb-2
+                  .flex-grow-1 編輯紀錄 
+                  .text-sm.text-success.ld.ld-fall-ttb-in 已自動存檔.
+                select.form-control
+              //- shown in view mode
+              //-.mb-4
+                .btn.btn-block.btn-primary 編輯提案 #[i.i-pen]
+              //- shown in edit mode
+              .mb-4
+                .d-flex.align-items-center.mb2
+                  .flex-grow-1 編輯進度
+                  a.text-sm.text-danger(href="#") 跳至待編修項
+                .progress
+                  .progress-bar.progress-bar-striped.progress-bar-animated(style="width:30%")
+              .mb-4
+                label.mb-1 提案人
+                div: +user.mr-2
+
+              .mb-4
+                label.mb-1 追蹤者
+                .d-flex.flex-wrap
+                  each i in [1,2,3,4,5]
+                    +user.mr-2
+
+        +scope("project-edit").flex-grow-1
+          each item in data.schema
+            if item.type == "short-answer"
+              +form-short-answer(item)
+            else if item.type == "long-answer"
+              +form-long-answer(item).ok
+            else if item.type == "radio"
+              +form-radio(item)
+            else if item.type == "upload-file"
+              +form-upload-file(item)
+
+          .d-flex.align-items-center
+            .btn.btn-lg.btn-primary.mr-4.disabled(ld="submit") 儲存並發布
+            .text-sm.text-danger #[i.i-close] 在能發布之前，您尚有 5 個項目未完成。#[a.text-danger.text-underline(href="#") 跳至待編修項目]
+
+          //-
+            +form-short-answer
+            +form-long-answer
+            +form-upload-file
+            +form-checkbox
+            +form-radio
+
+        //-+scope("project-edit").flex-grow-1
+
+          .form-group
+            label 你的提案名稱
+            +edit-text({name: 'title'})
+          .form-group
+            label 你的提案縮圖
+            +edit-image({name: 'thumbnail'})
+          .form-group
+            label 你需要多少錢？（30 ~ 50 萬之間）
+            +edit-slider({name: 'money'})
+
+          -
+            titles = [
+              "請以簡短且非專業人士也能理解的方式介紹此專案。",
+              "提案者簡介",
+              "請簡述提案者在專案中的角色（例如：專案經理、全端工程師、顧問等）、專案成員與團隊背景介紹。（團隊現在有什麼人才？還需要什麼人才？）"
+            ]
+          .form-group
+            label 使用 markdown 編輯內容的範例
+            textarea.form-control(rows="5")
+            .d-flex.align-items-center.mt-2
+              .d-flex.align-items-center.text-sm.text-muted.mr-4
+                input.mr-1(type="checkbox")
+                div 啟用 Markdown 語法 ( #[a(href="#") 語法說明] )
+              .d-flex.align-items-center.text-sm.text-muted.mr-4
+                input.mr-1(type="checkbox")
+                div 預覽
+
+          each title,$index in titles
+            .form-group
+              label #{title}
+              +edit-richtext({name: 'f' + $index})
+          .form-group
+            label 請提供本活動所需的授權文件電子掃描檔。
+            +edit-upload({name: "authorize"})
+          .form-group
+            label 請提供本計劃的示意圖或介面設計草圖
+            +edit-image({name: "design"})
+          .form-group
+            label 相關的關鍵字或標籤
+            +edit-tags({name: "tags"})
+          .form-group
+            label 專案屬於哪一個子分類？
+            - category = ["開放政府","新媒體","公共服務","開放資料","社會參與","基礎建設"]
+            +edit-select({values: category, other: false, name: "category"})
+          .form-group
+            label 專案使用什麼授權？
+            - values = ["CC-BY","MIT","GPLv3","Apache V2","CC0"]
+            +edit-select({values: values, other: true, name: "license"})
+          .form-group
+            label 專案符合哪些要素？
+            - values = ["多元","協作","開放","分享"]
+            +edit-multiple({values: values, name: "component"})
+          hr
+          .d-flex.align-items-center
+            .btn.btn-primary.mr-4(ld="submit") 儲存並發布
+            .text-sm.text-danger 在能發布之前，您尚有 5 個項目未完成。#[a.text-danger.text-underline(href="#") 跳至待編修項目]
+
+block script
+  +script("/js/edit.js")
+  script: :lsc
+    ldc.register \project-edit, <[]>, ->
+      form = new ldForm do
+        root: '[ld-scope=project-edit]'
+      handle = ->
+        console.log form.getfd!
+        
+      view = new ldView do
+        root: '[ld-scope=project-edit]'
+        action: click: do
+          submit: -> handle!
+    ldc.app \project-edit
+

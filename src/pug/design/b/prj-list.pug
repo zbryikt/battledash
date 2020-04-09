@@ -3,11 +3,12 @@ block vars
   - ctrl.navtop.placeholder = true;
   - ctrl.navtop.shown = true;
 block body
-  include data.pug
-  include /activity/mixin.pug
-  include /project/create.pug
+  include /design/data/prj-list.pug
+  include /design/mixins/prj.pug
+  //-include /activity/mixin.pug
+  //-include /project/create.pug
 
-  mixin act-card(prj)
+  //-mixin act-card(prj)
     - if(!prj) prj = {}
     a.text-dark(style="text-decoration:none",href="/project/")
       .card.shadow-sm(style="width:310px")&attributes(attributes)
@@ -26,7 +27,7 @@ block body
     .w-1024.rwd.mx-auto.d-flex.flex-wrap.justify-content-between
       //-each i in [1,2,3,4,5,6,7,8,9,10,11,12]
       each prj in db
-        .pb-4: +act-card(prj).mb-4
+        .py-4: +prj-card(prj).mb-4.h-100.shadow-sm
     .w-1024.rwd.mx-auto.text-center.my-4.py-4
       .btn-group.mx-auto
         each i in [1,2,3,4,5,6]

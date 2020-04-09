@@ -1,0 +1,122 @@
+extends /base.pug
+block vars
+  - ctrl.scrollspy = "#scrollspy-nav"
+  - var data = {}
+  -
+    data.prj = {
+      id: 123,
+      name: "台灣神手計畫",
+      owner: 123,
+      ownerName: "神手健",
+      description: "台灣神手致力發展適合台灣人的開源義肢，並將程式碼、3D檔案、電路佈局開源於”台灣神手開源義肢“網站"
+    }
+  -
+    data.org = {
+      id: 123,
+      name: "零時政府揪松團",
+      description: "零時政府揪松團（ jothon）是主辦  百人大黑客松與基礎松的工作小組（task force），2012 年底開始舉辦雙月大松，2014 年後正式取名為「揪松團」，並於 2016 年開始招募正職員工，重啟社群基礎建設計畫，希望在大黑客松之餘，讓線上與線下的跨界協作更為順暢。"
+    }
+block head
+block body
+
+  mixin config(name,desc)
+    .d-flex.mb-2.pt-2.align-items-center.border-top.border-light
+      .flex-grow-1
+        label.mb-0 #{name}
+        .text-sm.text-muted #{desc}
+      .ml-2
+        .switch(ld="switch",data-name=name)
+
+  .w-1024.mx-auto.rwd.mt-3
+    .row
+      .col-md-10
+        .heading-contrast.typeset(data-spy="scroll",data-target="#scrollspy-nav",style="overflow-y:auto")
+          .d-flex.align-items-end.mb-4
+            h1.my-0 設計參考
+            .text-lg.text-muted / Design Reference
+          hr
+          p 基本字型使用 Noto Sans TC 與 Roboto。
+
+          h2 卡式元件
+
+          include mixins/brd.pug
+          include mixins/org.pug
+          include mixins/prj.pug
+          include mixins/user.pug
+          include mixins/form.pug
+
+          h4 活動
+          hr
+          .d-flex.align-items-start.pb-4.justify-content-around
+            .mr-4
+              .mb-2 brd-card-sm
+              +brd-card-sm({name: "2019春季公民科技獎助金", orgName: "零時政府揪松團"})
+            div
+              .mb-2 brd-card
+              +brd-card({name: "2019春季公民科技獎助金", orgName: "零時政府揪松團"})
+
+          h4 組織
+          hr
+          .d-flex.align-items-start.pb-4.justify-content-around
+            .mr-4
+              .mb-2 org-card-sm
+              +org-card-sm(data.org)
+            div
+              .mb-2 org-card
+              +org-card(data.org)
+
+          h4 提案
+          hr
+          .d-flex.align-items-start.pb-4.flex-wrap.justify-content-around
+            .mr-4
+              .mb-2 prj-card-sm
+              +prj-card-sm(data.prj).shadow-sm
+            .mr-4
+              .mb-2 prj-card
+              +prj-card(data.prj).shadow-sm
+            .mr-4
+              .mb-2 prj-thumb
+              +prj-thumb(data.prj)
+            .my-4.w-100.pl-4
+              .mb-2 prj-list-sm
+              +prj-list-sm(data.prj).p-2.rounded.shadow-sm
+            .my-4.w-100.pl-4
+              .mb-2 prj-list
+              +prj-list(data.prj).p-2.rounded.shadow-sm
+
+          h4 用戶
+          hr
+          +user
+
+          h2 表單元件
+          .row
+            .col-md: +config("開關選項", "此為額外的說明文字")
+            .col-md: +config("開關選項", "此為額外的說明文字")
+
+          h4 表單
+          hr
+          +form-short-answer
+          +form-long-answer
+          +form-upload-file
+          +form-checkbox
+          +form-radio
+
+          h2 頁面列表
+          ul
+            li: a(href="/design/b/prj-list.html") 提案列表
+
+
+
+      .col-md-2
+        nav#scrollspy-nav.navbar.navbar-light.bg-white.border-left.sticky
+          .navbar-brand Design Spec
+          a.nav-link(href="#card",data-scrollto="#card") 卡式元件
+          a.nav-link(href="#brd",data-scrollto="#brd") 活動
+          a.nav-link(href="#org",data-scrollto="#org") 組織
+          a.nav-link(href="#prj",data-scrollto="#prj") 提案
+          a.nav-link(href="#user",data-scrollto="#user") 用戶
+          a.nav-link(href="#form",data-scrollto="#form") 表單元件
+          a.nav-link(href="#form-widget",data-scrollto="#form-widget") 控制項
+          a.nav-link(href="#form-block",data-scrollto="#form-block") 區塊
+          a.nav-link(href="#pages",data-scrollto="#pages") 頁面列表
+  +nbr(5)
