@@ -2,6 +2,7 @@ extends /base.pug
 block vars
   - ctrl.navtop.placeholder = true;
   - ctrl.navtop.shown = true;
+  - ctrl.navtop.className = "navbar-light bg-semi-light"
 block body
   include /design/data/prj-list.pug
   include /design/mixins/prj.pug
@@ -27,7 +28,7 @@ block body
     .w-1024.rwd.mx-auto.d-flex.flex-wrap.justify-content-between
       //-each i in [1,2,3,4,5,6,7,8,9,10,11,12]
       each prj in db
-        .py-4: +prj-card(prj).mb-4.h-100.shadow-sm
+        .py-4.my-4: +prj-card-noframe(prj).mb-4.h-100.border-0.shadow-none
     .w-1024.rwd.mx-auto.text-center.my-4.py-4
       .btn-group.mx-auto
         each i in [1,2,3,4,5,6]
@@ -46,21 +47,21 @@ block body
         li 屆數? ( 不一定需要? )
 
   +scope("project-list")
-    .w-1024.rwd.mx-auto.my-4
+    //-.w-1024.rwd.mx-auto.my-4
       .btn-group
         .btn.btn-outline-dark.active(ld="style",data-value="center") 置中標頭
         .btn.btn-outline-dark(ld="style",data-value="side") 靠左標頭
         .btn.btn-outline-dark(ld="style",data-value="simple") 簡式標頭
 
-    .d-none(ld="panel center")
+    //-.d-none(ld="panel center")
       .w-1024.rwd.mx-auto.mt-4.pt-4.mb-4: +act-head-center
       +list
 
-    .d-none(ld="panel side")
-      .w-1024.rwd.mx-auto.mt-4.pt-4.mb-4: +act-head-side
+    .d-block(ld="panel side")
+      .w-1024.rwd.mx-auto.pt-4: +act-head-side
       +list
 
-    .d-none(ld="panel simple")
+    //-.d-none(ld="panel simple")
       .w-1024.rwd.mx-auto.mt-4.pt-4: +act-head-simple
       +list
 block script

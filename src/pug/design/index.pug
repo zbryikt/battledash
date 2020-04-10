@@ -68,15 +68,18 @@ block body
           h4 提案
           hr
           .d-flex.align-items-start.pb-4.flex-wrap.justify-content-around
-            .mr-4
+            .mr-4.mb-4
               .mb-2 prj-card-sm
               +prj-card-sm(data.prj).shadow-sm
-            .mr-4
+            .mr-4.mb-4
               .mb-2 prj-card
               +prj-card(data.prj).shadow-sm
-            .mr-4
+            .mr-4.mb-4
               .mb-2 prj-thumb
               +prj-thumb(data.prj)
+            .mr-4.mb-4
+              .mb-2 prj-card-noframe
+              +prj-card-noframe(data.prj)
             .my-4.w-100.pl-4
               .mb-2 prj-list-sm
               +prj-list-sm(data.prj).p-2.rounded.shadow-sm
@@ -95,15 +98,39 @@ block body
 
           h4 表單
           hr
-          +form-short-answer
-          +form-long-answer
-          +form-upload-file
-          +form-checkbox
-          +form-radio
+          +form-short-answer({})
+          +form-long-answer({})
+          +form-upload-file({})
+          +form-checkbox({})
+          +form-radio({})
+
+          h4 功能元件 ( TBD )
+          hr
+          ul
+            li 建立提案
+            li 提案列表
 
           h2 頁面列表
+          h4 活動
           ul
             li: a(href="/design/b/prj-list.html") 提案列表
+            li: a(href="/design/b/prj-create.html") 建立提案 / 瀏覽提案
+            li: a(href="/design/b/dashboard.html") 主控台
+
+          h4 評選
+          ul
+            li: a(href="/design/b/judge/review.html") 個人審核 / 審核總表
+            li: a(href="/design/b/judge/schulze.html") 孔多塞圖表
+
+          h4 用戶
+          ul
+            li: a(href="/design/me/") 用戶主頁
+
+          h4 設計中
+          ul
+            li: a(href="/design/work/sortable.html") 導覽列編輯
+            li: a(href="/design/work/edit.html") 頁面編輯
+            li: a(href="/design/work/404.html") 404 頁面
 
 
 

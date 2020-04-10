@@ -137,9 +137,9 @@ body {
 .nav.nav-pills a.nav-link.active:hover {
   color: #fff;
 }
-#nav-top nav {
-  padding: 0 2.5em;
-}
 #nav-top-placeholder {
   height: 56px !important;
+}
+.dropdown-item {
+  font-weight: 300;
 }
