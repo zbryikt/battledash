@@ -67,7 +67,8 @@ block body
       textarea.form-control.border-0.rounded-0(rows="5",placeholder="在這裡輸入您的附註 ... ")
       .card-footer
         .d-flex.justify-content-between
-          .btn.btn-primary(data-ldcv-set="") 關閉
+          .btn.btn-outline-secondary 捨棄
+          .btn.btn-primary(data-ldcv-set="") 完成
 
     #review-detail.ldcv: .base.w-480: .inner.card.shadow-sm
       .card-header.shadow-sm.position-relative.z-float
@@ -93,8 +94,7 @@ block body
           .border-left.pl-2.mb-4 開發一個網頁工具，使用者可以輸入關鍵字，快速瀏覽開放過的相關資料和政府辦理民眾資料申請的情形。
       .card-footer
         .d-flex.justify-content-between
-          .btn.btn-outline-secondary 捨棄
-          .btn.btn-primary(data-ldcv-set="") 完成
+          .btn.btn-primary(data-ldcv-set="") 關閉
 
     .d-flex.flex-column.h-100.w-100
       div(style="height:56px")
