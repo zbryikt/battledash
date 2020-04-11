@@ -66,6 +66,9 @@ base = do
     if names.filter(-> !/^\d+$/.exec(req.params[it])).length => return base.r400 res, "incorrect key type", as-page
     cb req, res
 
+  signed: (req, res, next) ->
+    if !(req.user and req.user.key) => next(new lderror(1000)) else next!
+
   authorized: (cb) -> (req, res) ->
     if !(req.user and req.user.staff == 1) =>
       return res.status(404).render('err/404.pug', {url: req.originalUrl})

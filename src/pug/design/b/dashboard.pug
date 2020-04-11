@@ -4,9 +4,11 @@ block vars
   - ctrl.navtop.shown = true;
   - ctrl.navtop.className = "navbar-light text-dark bg-white"
   include /design/data/sample.pug
+block head
 block body
   include /activity/mixins/index.pug
   include /design/mixins/index.pug
+
   .w-1024.mx-auto.d-flex
     .px-4.pb-4
       .sticky(style="top:55px")
@@ -20,6 +22,7 @@ block body
           .btn.btn-text.btn-block(href="/design/b/prj-list.html") 提案列表
           .btn.btn-text.btn-block 資訊分析
           .btn.btn-text.btn-block 製作複本
+          .btn.btn-text.btn-block 客製頁面
 
     .px-4.pb-4.flex-grow-1
 
@@ -30,7 +33,8 @@ block body
             li.nav-item: a.nav-link(ld="tabbar-tab",data-name="config") 階段
             li.nav-item: a.nav-link(ld="tabbar-tab",data-name="perm") 權限
             li.nav-item: a.nav-link(ld="tabbar-tab",data-name="form") 提案表
-            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="judge") 評選資訊
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="judge") 資格
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="navbar") 導覽
           ul.navbar-nav.ml-auto
             li.nav-item: a.nav-link(href="/org/dashboard.html") 組織設定
       .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="config")
@@ -113,7 +117,11 @@ block body
 
       .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="judge"): .card-body: .p-4
         +scope("activity-judge")
-          h4 評選資訊
+          h4 資格審核
+          p.text-muted.text-sm 編輯提案所需具備的資格清單與細節。此列表將運用在評選時的資格審核表中。
+          include judge/criteria-form.pug
+
+      +sort-panel
 
       .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="analysis"): .card-body: .p-4
         +scope("activity-analysis")

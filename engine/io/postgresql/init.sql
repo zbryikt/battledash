@@ -6,7 +6,7 @@ create table if not exists exception (
   detail jsonb,
   ip text,
   createdtime timestamp default now()
-)
+);
 
 create table if not exists users (
   key serial primary key,
@@ -24,26 +24,26 @@ create table if not exists users (
   config jsonb,
   staff int,
   deleted boolean
-)
+);
 
 create table if not exists mailverifytoken (
   owner int references users(key) on delete cascade,
   token text,
   time timestamp
-)
+);
 
 create table if not exists pwresettoken (
   owner int references users(key) on delete cascade,
   token text,
   time timestamp
-)
+);
 
 create table if not exists sessions (
   key text not null unique primary key,
   detail jsonb
-)
+);
 
-create index if not exists sessions_detail_key on sessions (((detail->'passport'->'user'->>'key')::int))
+create index if not exists sessions_detail_key on sessions (((detail->'passport'->'user'->>'key')::int));
 
 create type state as enum ('active','pending','deleted','canceled','suspended','invalid');
 
@@ -51,36 +51,38 @@ create table if not exists organization (
   key serial primary key,
   owner int references users(key) not null,
   slug text not null,
-  title text not null constraint title_len check (char_length(title) <= 100),
+  name text not null constraint name_len check (char_length(name) <= 100),
   description text constraint description_len check (char_length(description) <= 500),
   detail jsonb,
   createdtime timestamp not null default now(),
-  state state not null,
+  state state not null default 'active',
   deleted bool default false
-)
+);
 
-create table if not exists activity (
+create table if not exists board (
   key serial primary key,
   owner int references users(key) not null,
-  org int references organization(key) not null,
+  org int references organization(key),
   slug text not null,
-  title text not null constraint title_len check (char_length(title) <= 100),
+  name text not null constraint name_len check (char_length(name) <= 100),
   description text constraint description_len check (char_length(description) <= 500),
   detail jsonb,
+  starttime timestamp,
+  endtime timestamp,
   createdtime timestamp not null default now(),
-  state state not null,
+  state state not null default 'active',
   deleted bool default false
-)
+);
 
 create table if not exists project (
   key serial primary key,
   owner int references users(key) not null,
   slug text not null,
-  activity int references activity(key),
-  title text not null constraint title_len check (char_length(title) <= 100),
+  board int references board(key),
+  name text not null constraint name_len check (char_length(name) <= 100),
   description text constraint description_len check (char_length(description) <= 500),
   detail jsonb,
   createdtime timestamp not null default now(),
-  state state not null,
+  state state not null default 'active',
   deleted bool default false
-)
+);
