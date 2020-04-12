@@ -1,13 +1,25 @@
 //- module
+mixin brd-local-info(opt)
+  .text-sm.text-muted
+    if opt.starttime
+      span #{opt.starttime}
+    if opt.endtime
+      span ~ #{opt.endtime}
+    if !(opt.starttime && opt.endtime)
+      span 時間未定
+    if opt.location
+      div #{opt.location}
+
 mixin brd-card-sm(opt)
   a.card.shadow.text-dark(href="#",
   style="text-decoration:none;width:250px")&attributes(attributes)
-    .card-img-top.bg-dark(style="height:200px")
+    .card-img-top.bg-dark.bg-cover.bg-portrait(
+    style=`height:200px;background-image:url(/assets/uploads/board/${opt.slug}.png)`)
     .card-body
       h5.mb-0.text-truncate #{opt.name || '未命名的活動'}
       if opt.orgName
         .text-sm.text-muted.mb-2 #{opt.orgName}
-      .text-sm.text-muted 2019/12/01 ~ 2019/12/31#[br]台北小巨蛋
+      +brd-local-info(opt)
 
 mixin brd-card(opt)
   a.card.shadow.text-dark(href="#",
@@ -17,5 +29,5 @@ mixin brd-card(opt)
       h5.mb-0.text-truncate #{opt.name || '未命名的活動'}
       if opt.orgName
         .text-sm.text-muted.mb-2 #{opt.orgName}
-      .text-sm.text-muted 2019/12/01 ~ 2019/12/31#[br]台北小巨蛋
+      +brd-local-info(opt)
 

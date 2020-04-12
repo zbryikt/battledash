@@ -5,6 +5,28 @@ require! <[../aux]>
 api = engine.router.api
 app = engine.app
 
+app.get \/b/:key, aux.signed, (req, res) ->
+  lc = {}
+  if !req.user => return aux.r403 res
+  io.query "select * from board where key = $1", [req.params.key]
+    .then (r={}) ->
+      if !(lc.board = board = r.[]rows.0) => return aux.reject 404
+      if board.owner != req.user.key => return aux.reject 403
+      io.query "select * from project where board = $1", [board.key]
+    .then (r={}) ->
+      lc.projects = r.[]rows
+      res.render \b/index.pug, lc{board, projects}
+    .catch aux.error-handler res
+
+app.get \/b/:key/dashboard, aux.signed, (req, res) ->
+  if !req.user => return aux.r403 res
+  io.query "select * from board where key = $1", [req.params.key]
+    .then (r={}) ->
+      if !(board = r.[]rows.0) => return aux.reject 404
+      if board.owner != req.user.key => return aux.reject 403
+      res.render \b/dashboard/index.pug, {board}
+    .catch aux.error-handler res
+
 api.post \/board, aux.signed, express-formidable!, (req, res) ->
   lc = {}
   {name,description,slug,starttime,endtime,org} = req.fields

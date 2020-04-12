@@ -20,7 +20,7 @@ block body
   include /design/mixins/index.pug
   +nbr(2)
   .w-640.mx-auto
-    +scope("brd-create").card.mb-4.shadow-sm: .card-body: .p-4
+    +scope("brd-basic").card.mb-4.shadow-sm: .card-body: .p-4
       h3 建立活動
       p.text-sm.text-muted 在我們進行下一步之前，先填妥活動的基本資訊吧
       hr
@@ -82,7 +82,7 @@ block body
     tail.DateTime("input[name=starttime]")
     tail.DateTime("input[name=endtime]")
     form = new ldForm do
-      root: "[ld-scope='brd-create']"
+      root: "[ld-scope='brd-basic']"
       submit: "[ld='submit']"
       afterCheck: (s, f) ->
         if f.thumbnail.value =>
@@ -105,7 +105,7 @@ block body
         return if !!v => 0 else 2
     ldld = new ldLoader root: document.body
     view = new ldView do
-      root: "[ld-scope='brd-create']"
+      root: "[ld-scope='brd-basic']"
       action: click: submit: ({node}) ->
         ldld.on!
         fd = form.getfd!

@@ -1,0 +1,119 @@
+//- view
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = true;
+  - ctrl.navtop.shown = true;
+  - ctrl.navtop.className = "navbar-light text-dark bg-white"
+  include /design/data/sample.pug
+block head
+  +css("https://cdn.jsdelivr.net/npm/tail.datetime@0.4.13/css/tail.datetime-harx-light.min.css")
+  script.
+    var board = !{escjson(board || null)};
+block body
+  include /activity/mixins/index.pug
+  include /design/mixins/index.pug
+
+  .w-1024.mx-auto.d-flex
+    .px-4.pb-4
+      .sticky(style="top:55px")
+        +brd-card-sm(board)
+        .text-center
+          br
+          p.text-muted.text-sm 這裡是您活動的管理後台。
+          hr
+          .btn.btn-text.btn-block(href="/org/") 所屬組織
+          .btn.btn-text.btn-block(href="/activity/") 活動主頁
+          .btn.btn-text.btn-block(href="/design/b/prj-list.html") 提案列表
+          .btn.btn-text.btn-block 資訊分析
+          .btn.btn-text.btn-block 製作複本
+          .btn.btn-text.btn-block 客製頁面
+
+    .px-4.pb-4.flex-grow-1
+
+      .navbar.navbar-expand-lg.navbar-light.mb-4.border.shadow-sm.rounded.sticky.z-fixed.bg-white(style="top:55px")
+        .collapse.navbar-collapse
+          ul.nav.nav-pills.mr-auto(ld="tabbar")
+            li.nav-item: a.nav-link.active(ld="tabbar-tab default",data-name="basic") 基本資訊
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="config") 階段
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="perm") 權限
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="form") 提案表
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="judge") 資格
+            li.nav-item: a.nav-link(ld="tabbar-tab",data-name="navbar") 導覽
+          ul.navbar-nav.ml-auto
+            li.nav-item: a.nav-link(href="/org/dashboard.html") 組織設定
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="config")
+        .card-body: .p-4: +config-panel
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="perm")
+        .card-body: .p-4: +permission-panel
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="form")
+        .card-body: .p-4: +scope("activity-form")
+          h4 提案表
+          p.text-sm.text-muted 您可以在這裡設定提案 / 報名時，提案人所需要提交的表格。
+          hr.my-4
+
+          //-include form.pug
+          .d-flex
+            .flex-grow-1
+
+              each item in data.schema
+                if item.type == "short-answer"
+                  +form-short-answer(item)
+                else if item.type == "long-answer"
+                  +form-long-answer(item).ok
+                else if item.type == "radio"
+                  +form-radio(item)
+                else if item.type == "upload-file"
+                  +form-upload-file(item)
+
+              
+            .ml-4
+              .sticky(style="top:150px")
+                .list-group.shadow-sm.mb-4
+                  .list-group-item.clickable.text-nowrap(ld="blocksrc",draggable="true",data-name="short-answer") #[i.i-doc] 短答
+                  .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="long-answer") #[i.i-doc] 申論
+                  .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="linear-scale") #[i.i-doc] 給分
+                  .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="checkbox") #[i.i-doc] 單選
+                  .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="radio") #[i.i-doc] 多選
+                  .list-group-item.clickable(ld="blocksrc",draggable="true",data-name="file") #[i.i-doc] 傳檔
+                .btn.btn-primary.btn-block 更新資料
+                .btn.btn-outline-secondary.btn-block 捨棄變更
+
+
+
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf(ld="tabbar-panel default",data-name="basic")
+        .card-body: .p-4: +scope("brd-basic")
+          h4 基本資訊
+          p.text-sm.text-muted 您可以在這裡為設定整個活動的通用資訊，例如名稱、簡介、主視覺、活動時間等等。
+          hr.my-4
+          include basic.pug
+          hr.my-4
+          .d-flex.justify-content-end
+            div: .btn.btn-primary.disabled(ld="submit") 更新資料
+
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="judge"): .card-body: .p-4
+        +scope("activity-judge")
+          h4 資格審核
+          p.text-muted.text-sm 編輯提案所需具備的資格清單與細節。此列表將運用在評選時的資格審核表中。
+          include /design/b/judge/criteria-form.pug
+
+      +sort-panel
+
+      .card.mb-4.shadow-sm.ld.ld-float-btt-in.xhalf.d-none(ld="tabbar-panel",data-name="analysis"): .card-body: .p-4
+        +scope("activity-analysis")
+          h4 視覺統計 
+          p.text-sm.text-muted 透過圖表與數據概略的了解目前活動進展、完成度與用戶參與的情形。
+          hr.my-4
+          .d-flex.w-100.mb-4
+            input.form-control.mr-2(type="date")
+            input.form-control(type="date")
+          img.w-100(src="/assets/img/c/chart/line.svg")
+  .position-fixed.alert.alert-warning.z-fixed.text-sm.shadow-sm(style="bottom:1em;left:1em;border-color:#c90")
+    span 您有尚未儲存的變更。#[a(href="#") 點我儲存]，或者 #[a(href="#") 捨棄變更]。
+
+block script
+  +script("/js/edit.js")
+  +script("/js/modules/board/index.js")
+  +script("/assets/lib/ctrlz/ctrlz.bundle.min.js")
+  +script("/js/activity/config.js")
+  +script("/js/activity/perm.js")
+  +script("/js/activity/tabbar.js")

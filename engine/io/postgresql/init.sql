@@ -69,6 +69,7 @@ create table if not exists board (
   detail jsonb,
   starttime timestamp,
   endtime timestamp,
+  location text,
   createdtime timestamp not null default now(),
   state state not null default 'active',
   deleted bool default false

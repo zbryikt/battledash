@@ -1,0 +1,30 @@
+//- view
+extends /base.pug
+block vars
+  - ctrl.navtop.shown = true
+  - ctrl.navtop.placeholder = false
+  - ctrl.navtop.className = "navbar-light text-dark"
+block head
+  +css("css/landing/index.css")
+block body
+  include /project/mixin.pug
+  include /activity/mixin.pug
+  include /modules/cover/authpanel.pug
+  .w-100.h-100.bg-light: .vertical-center: .w-100.text-center
+    h1 #{board.name || '未命名的活動'}
+    p.text-muted #{board.description || '這個活動的簡介還有待工作人員更新'}
+  .typeset.heading-contrast
+    .w-1024.mx-auto.rwd.py-4
+      h2 活動簡章
+      p 這裡應該簡單的介紹您的活動。
+      p 若您需要進一步的客製此頁面，請至 #[a(href=`/b/${board.key}/edit`) 頁面編輯器] 進行編輯。
+
+    .w-1024.rwd.mx-auto.pt-4: +act-head-side
+
+    .w-1024.rwd.mx-auto.d-flex.flex-wrap.justify-content-between
+      each prj in projects
+        .py-4.my-4: +prj-card-noframe(prj).mb-4.h-100.border-0.shadow-none
+    .w-1024.rwd.mx-auto.text-center.my-4.py-4
+      .btn-group.mx-auto
+        each i in [1,2,3,4,5,6]
+          .btn.btn-outline-secondary(class=(i==1?"active":"")) #{i}
