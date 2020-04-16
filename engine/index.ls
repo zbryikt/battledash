@@ -4,6 +4,7 @@ require! <[fs fs-extra path crypto LiveScript chokidar moment]>
 require! <[express body-parser express-session connect-multiparty csurf express-rate-limit]>
 require! <[passport passport-local passport-facebook passport-google-oauth20]>
 require! <[nodemailer]>
+require! <[sharedb-wrapper]>
 require! <[./io/postgresql ./api ./ext ./view]>
 require! <[./aux ./watch ../secret ./watch/build/mod]>
 require! 'uglify-js': uglify-js, LiveScript: lsc
@@ -123,7 +124,7 @@ backend = do
 
     session-store = -> @ <<< authio.session
     session-store.prototype = express-session.Store.prototype
-    app.use express-session do
+    app.use session = express-session do
       secret: config.session.secret
       resave: true
       saveUninitialized: true
@@ -136,6 +137,23 @@ backend = do
         domain: ".#{config.domain}"
     app.use passport.initialize!
     app.use passport.session!
+
+    # =========== Sharedb
+    if config.{}sharedb.enabled =>
+      access = ({user, id, data, type}) -> new Promise (res, rej) ->
+        # only owner or user with id = 1 can write
+        if type == \receive and data and data.a == \op =>
+          if id and +id.split('-').0 != user.key and user.key != 1 => return rej!
+        if user => res! else rej!
+
+      @sharedb = {server, sdb, connect, wss} = sharedb-wrapper {app, io: config.io-pg, session, access}
+
+      wss.on \connection, (ws, req) ->
+        p = if session? => new Promise((res, rej) -> session(req, {}, (-> res!))) else Promise.resolve!
+        p.then ->
+          session = req.session
+          user = req.session.passport and req.session.passport.user
+          ws.on \close, ->
 
     passport.serializeUser (u,done) ->
       authio.user.serialize u .then (v) ->
@@ -284,7 +302,11 @@ backend = do
       watch.on \unlink, -> mod-builder.unlink it
       watch.on \build, -> custom-builder.build it
       watch.on \unlink, -> custom-builder.unlink it
-    server = app.listen config.port, -> console.log "[SERVER] listening on port #{server.address!port}".cyan
+
+    if config.sharedb.enabled =>
+      server.listen config.port, -> console.log "[SERVER] listening on port #{server.address!port}".cyan
+    else
+      server = app.listen config.port, -> console.log "[SERVER] listening on port #{server.address!port}".cyan
     inited-time = Date.now!
     console.log "[SERVER] Initialization: #{(inited-time - start-time) / 1000}s elapsed.".yellow
     res!

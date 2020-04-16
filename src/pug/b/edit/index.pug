@@ -13,6 +13,10 @@ block head
     *[ld=editor] > div
       height: 100%
     .item
+      text-overflow: ellipsis
+      overflow: hidden
+      white-space: nowrap
+
       padding: .5em 1em
       color: #fff
       .i-close
@@ -30,7 +34,6 @@ block body
       .p-2
         .btn.btn-sm.btn-text.text-light #[i.i-dart-left] dashboard
       .flex-grow-1
-
         .item.d-flex.align-items-center
           .flex-grow-1 #[i.i-dart-down] pages
           i.i-plus
