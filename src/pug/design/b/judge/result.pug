@@ -1,0 +1,26 @@
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = true;
+block head
+block body
+  include /design/mixins/index.pug
+  .w-1024.rwd.mx-auto.typeset.heading-contrast.my-4
+    h3 獲選提案一覽表
+    .text-muted 評選委員：吳小光、陳小春、張大千、王中平
+    .py-4
+      table.table.table-bordered
+        tr
+          th 序號
+          th 提案名稱
+          th 申請者
+          th 申請項目
+          th 計劃總經費
+          th 補助金額
+        each i in [1,2,3,4]
+          tr
+            td 1
+            td 開放 SaaS 平台
+            td 王小明
+            td 座談/活動/開發
+            td 1,503,500
+            td 600,000

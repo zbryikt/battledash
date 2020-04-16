@@ -16,6 +16,16 @@ block head
       background: #f9fafb
       color: #47b
 block body
+  .position-absolute.z-fixed.px-4.py-2.shadow.border.rounded.bg-white(style="bottom:10px;left:10px;width:50%;")
+    .d-flex.align-items-center
+      .mr-4
+        .text-muted.text-sm 距評選截止還有
+        .text-danger 2 天 15 小時 20 分
+      .mr-4.flex-grow-1
+        .text-muted.text-sm 完成度
+        .progress.my-1(style="width:100%"): .progress-bar.progress-bar-striped.progress-bar-animated(style="width:60%")
+      div
+        .btn.btn-outline-dark 提交評分結果
   .h-100.w-100
     .d-flex.flex-column.h-100.w-100
       div(style="height:56px")

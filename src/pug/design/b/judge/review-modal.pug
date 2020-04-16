@@ -1,0 +1,51 @@
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = false;
+block head
+block body
+  include /design/mixins/index.pug
+  +nbr(3)
+  .card.mx-auto.my-4.shadow(style="width:800px"): .card-body.text-left
+    .d-flex
+      .flex-grow-1
+        .text-muted 資格初審狀況
+        h3 點對點分散式網路
+      div
+        div
+          span 不推薦數
+          span 三人
+        div
+          span 共 3 項不符資格、1 項有爭議
+    hr
+    .d-flex.align-items-center
+      .flex-grow-1
+        .text-lg: b 整體審核狀況
+        .text-muted 所有審核人員的總合結果
+
+      each i in [1,2,3]
+        .text-center.px-2
+          .text-muted 不可取代性
+          if Math.random() > 0.5
+            .text-success(style="font-size:3em;line-height:1em") #[i.i-circle]
+          else
+            .text-danger(style="font-size:3em;line-height:1em") #[i.i-close]
+
+    each i in [1,2,3]
+      hr
+      .d-flex.align-items-center
+        .flex-grow-1
+          .text-lg: +user
+          div ichieh
+
+        each i in [1,2,3]
+          .text-center.px-2
+            .text-muted 不可取代性
+            if Math.random() > 0.5
+              .text-success(style="font-size:3em;line-height:1em") #[i.i-circle]
+            else
+              .text-danger(style="font-size:3em;line-height:1em") #[i.i-close]
+      p 想前詩話得建我，感親人呢切水推。生的上是們識來散天是其題信較準而阿是，他萬品教，也頭說命景水元……意法空不死能以，有正圖。慢行爭，我們可就有了包病課中我不大！
+
+      p 積大際外落；情個神海之日死，心放心不不四師文定種只果法晚望到；們本但為出軍，業證男的德全這？一實什次事導樹上候自我……唱生半裝又的香料想眼線留做活格代：不香海飯面對電定究區以就！或院義風希口我生樣每集多答日，微海變全中務科麼上去士紀實兩我有會個心調嚴縣拿代。感行在電向帶口子甚，金紀表四人落便李那適在些大了個
+    hr
+    .text-right: .btn.btn-outline-dark 關閉

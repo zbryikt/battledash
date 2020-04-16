@@ -1,0 +1,64 @@
+doctype html
+include /../../static/assets/ldui/pug/ldui.pug
+- var vars = {root: ""}
+html
+  head
+    +css("/assets/bootstrap/4.3.1/css/bootstrap.min.css")
+    +css("/assets/ldui/ldui.min.css")
+    style(type="text/css"): :stylus
+      .project-list > .project
+        margin: 0 .25em 1.25em
+        width: 40%
+        flex: 1 0 auto
+  body
+    .paper.shadow.typeset.heading-contrast.position-relative
+      //-.text-center
+        .m-4
+          h3.mb-0 2018 年
+          h2.mt-0 公民科技創新獎助金
+          h1 決選名單
+        hr
+      div
+        div 臺北市政府文化局108年度設計補助計畫
+        h2.mt-0 決選名單
+      hr
+
+      .text-lg.font-weight-bold.mb-4 獲選專案
+      .project-list.d-flex.flex-wrap
+        .project
+          .text-sm.text-muted 台灣設計師連線工作室
+          .font-weight-bold 台灣設計師週─Let's Talk Design設計論壇
+
+        .project
+          .text-sm.text-muted 點點善有限公司
+          .font-weight-bold 點點善城市曙光2.0圖像應用計畫
+
+        .project
+          .text-sm.text-muted 一間房子有限公司
+          .font-weight-bold 大稻埕紙藝復興X全民造紙計劃
+
+        .project
+          .text-sm.text-muted 滾石文化股份有限公司
+          .font-weight-bold 2019《台北國際數位廣告節》Creativity Drives Efficiency國際性活動企劃計畫書
+
+        .project
+          .text-sm.text-muted 林思駿
+          .font-weight-bold 記憶之島：台北城南空間訪查成果暨概念創作展
+
+        .project
+          .text-sm.text-muted 臺北市藝術產業協會
+          .font-weight-bold 2019年大內藝術節系列活動：文學走讀-藝術BUS與綠洲計畫
+
+        .project
+          .text-sm.text-muted 島嶼工程顧問有限公司
+          .font-weight-bold 烘焙大同-看見自己的城市行銷術
+
+        .project
+          .text-sm.text-muted 寰陞國際股份有限公司
+          .font-weight-bold Good Moment
+
+      hr
+      .text-lg.font-weight-bold.mb-2 評選委員
+      .mb-4 陳小春、吳曉光、林小涵、張小千、黃小虎、李小刀
+      .text-muted 評選委員簽名
+      .position-absolute.text-center(style="left:0;width:100%;bottom:2em") 2020 年 4 月 20 日
