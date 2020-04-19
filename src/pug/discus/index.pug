@@ -2,6 +2,68 @@ extends /base.pug
 block vars
   - ctrl.navtop.placeholder = false;
   - ctrl.navtop.shown = false;
+  -
+    var discus = [
+      {
+        key: 1,
+        author: "Bass Lin", role: "審核人員",
+        date: "2019/08/10",
+        content: "若有待補充內容，請記得在今天（2/22）23:59 前補齊提案。"
+      },
+      {
+        key: 2,
+        author: "Johnny Wang", role: "線上初審",
+        date: "2019/08/11",
+        content: "你的 PDF 裡面的圖看不到喔！"
+      }, 
+      {
+        key: 3,
+        author: "Peter Lao", role: "",
+        date: "2019/08/22",
+        content: `
+    Hi 小王 & 小明
+
+
+    公年回收完遊市成？血都清地證始新病教學子。即年高卻，個制過運長、程有著多年生行難家角同客，民上世意個春品不於員白入舉，不相血毒黃大相，外如世不同友喜會地許，開高是軍必慢而力，覺公題人的員二用色。文聲今正；回就政可在全備事重方見大題開體形識我友是今活！應如這破修說。
+
+    麼推會華，業向眼元會；整不下議喜有。應到小那做……相念機巴放；沒母的成。活以不一黨通要動不我以費充歌一讀？
+
+    不母人口聯我主畫年。不影取金道人。
+
+    斷議關務任傷看投青工不須法如見後；位地全……轉們他的麼平流看得從；對生時，會對最中已候定，院畫張的民……生間斷很日稱神也最充眼接實此事早理險從正。
+
+        `
+      },
+      {
+        key: 4,
+        author: "Shushing Liang", role: "提案人",
+        date: "2019/08/30",
+        thread: 3,
+        content: `
+    Hi Peter, 
+    獲義子時變或……政術能動訴，紀飯時以，從西著面組；人蘭館步……紅居告背收，們兒成報精到能，父家人條檢得回演氣這生，一太爭地問爭同停來放司，大又排令。
+
+    平發定然三風下……病或說未我決聯樹自運總機家家；人草士年記沒故的心童趣難動個可人自對真而你他林好。
+        `
+      },
+      {
+        key: 5,
+        author: "Peter Lao", role: "提案人",
+        date: "2019/08/31",
+        thread: 3,
+        content: `
+    出張或品，評山生的我排聯險傳出北其工來本學美機你的人想以媽現回依手生或後年速竟滿轉？最觀才告品，子母地中全背我學一會勢……其角我流也是來不走建；清思內有如自人保方雙？
+
+    在點線在其步，苦小的世月作理舞學告復總現金月然上他本業出：找一定度性調。
+        `
+      },
+      {
+        key: 6,
+        author: "Wintergatan", role: "提案人",
+        date: "2019/09/01",
+        content: "好喔！"
+      }
+    ];
 block head
   +css("https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.31.4/dist/tagify.css")
   style(type="text/css"): :stylus
@@ -16,9 +78,9 @@ block head
     .comment .content
       padding: .25em 0
     .thread
-      padding-left: 4.25em!important
+      padding-left: 5em!important
       .avatar
-        width: 2.5em!important
+        width: 2em!important
 
 
 block body
@@ -45,7 +107,7 @@ block body
   .w-1024.rwd.mx-auto.p-4.m-4
     mixin comment(opt)
       - if(!opt) opt = {}
-      .comment.media.mb-2.p-2.position-relative(class=opt.class)
+      .comment.media.mb-2.p-2.position-relative(class=(opt.thread ? "thread" : ""))
         .btn-group.position-absolute.shadow-sm.bg-white.ctrl(style="top:-.75em;right:1em")
           .btn.btn-sm.btn-outline-secondary #[i.i-heart]
           .btn.btn-sm.btn-outline-secondary #[i.i-clone]
@@ -53,12 +115,13 @@ block body
           .btn.btn-sm.btn-outline-secondary #[i.i-lock]
           .btn.btn-sm.btn-outline-secondary #[i.i-close]
 
-        .avatar.mr-2(style="width:3.25em"): .aspect-ratio.ratio-1by1.rounded.bg-dark.w-100
+        .avatar.mr-3(style="width:3.25em"): .aspect-ratio.ratio-1by1.rounded.bg-dark.w-100
         .media-body
-          .d-flex.align-items-end.mb-2
-            b.my-0(style="line-height:1em") 劉德華
-            .text-sm.text-muted.ml-1 ．g0v 揪松團
-            .text-sm.text-muted.ml-1 ．2019/08/10
+          .d-flex.align-items-center
+            b.my-0 #{opt.author}
+            if opt.role
+              .text-sm.text-muted.ml-1 ． #{opt.role}
+            .text-sm.text-muted.ml-1 ． #{opt.date}
             //-.text-sm.text-muted.ml-1 ．回覆
           .content.my-1: block 
           //-.d-flex.text-muted
@@ -76,13 +139,20 @@ block body
         textarea.form-control.mb-2(rows="4")
         .d-flex
           .flex-grow-1.d-flex
-            .mr-2: i.i-doc
-            .mr-2: i.i-doc
-            .mr-2: i.i-doc
+            .btn.btn-text: i.i-link
+            .btn.btn-text: i.i-doc
           div
             .btn.btn-outline-secondary 送出留言
 
-    each i in [1,2,3,4,5,6,7]
+    each c in discus
+      if !c.thread
+        +comment(c)
+          div !{md(c.content)}
+        each d in discus.filter(function(d,i) { return d.thread == c.key; })
+          +comment(d)
+            div !{md(d.content)}
+
+    //-each i in [1,2,3,4,5,6,7]
       +comment({class: (i>3?"thread":""), more:(i==1?true:false)})
         if i < 3 || i > 3
           p 若有待補充內容，請記得在今天（1/15）23:59 前補齊提案。
