@@ -113,19 +113,58 @@ block body
           h2 頁面列表
           h4 活動
           ul
-            li: a(href="/design/b/prj-list.html") 提案列表
-            li: a(href="/design/b/prj-create.html") 建立提案 / 瀏覽提案
-            li: a(href="/design/b/dashboard.html") 主控台
-
+            li
+              span 頁面
+              ul
+                li: a(href="/design/b/create.html") 建立活動
+                li: a(href="/design/b/dashboard.html") 主控台
+                li 頁面編輯器
+                li 分析圖表
+                li
+                  span 頁面範本
+                  ul: li 首頁
+                li
+                  span 提案
+                  ul
+                    li: a(href="/design/b/prj-list.html") 提案列表
+                    li: a(href="/design/b/prj-create.html") 建立提案 / 編輯提案 / 瀏覽提案
+              span 元件
+              ul
+                li: a(href="/design/b/judge/criteria.html") 編輯資格列表
           h4 評選
           ul
-            li: a(href="/design/b/judge/review.html") 個人審核 / 審核總表
-            li: a(href="/design/b/judge/schulze.html") 孔多塞圖表
+            li
+              span 頁面
+              ul
+                li
+                  span 資格審核 -
+                  a.mx-1(href="/design/b/judge/review.html") 個人審核表
+                  span.mx-1 /
+                  span.mx-1 匯整表
+                li
+                  span 評選 - 
+                  a.mx-1(href="/design/b/judge/user.html") 個人評選表
+                  span.mx-1 /
+                  a.mx-1(href="/design/b/judge/all.html") 評選總表
+                  span.mx-1 /
+                  a.mx-1(href="/design/b/judge/schulze.html") 孔多塞圖表
+                li
+                  span 獲選 - 
+                  a.mx-1(href="/design/b/judge/result.html") 獲選提案清單
+                  span.mx-1 /
+                  a.mx-1(href="/design/b/judge/sign.html") 獲選提案簽名板
+              span 元件
+              ul
+                li: a(href="/design/b/judge/review-modal.html") 審核結果摘要 - 單一提案
 
           h4 用戶
           ul
             li: a(href="/design/me/") 用戶主頁
 
+          h2 元件列表
+          h4 活動
+          ul
+          h4 評選
           h4 設計中
           ul
             li: a(href="/design/work/sortable.html") 導覽列編輯

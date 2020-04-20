@@ -1,0 +1,85 @@
+<!DOCTYPE html><html><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.31.6/dist/tagify.css"><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.7.0/marked.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.3/purify.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.31.6/dist/tagify.min.js"></script><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300,400,500,700|Roboto:300,500&amp;display=swap" rel="stylesheet"><link rel="stylesheet" type="text/css" href="/assets/lib/flatpickr/flatpickr.min.css"><link rel="stylesheet" type="text/css" href="/assets/bootstrap/4.3.1/css/bootstrap.min.css"><link rel="stylesheet" type="text/css" href="/assets/ldui/ldui.min.css"><link rel="stylesheet" type="text/css" href="/css/index.css"><style type="text/css">h1,
+h2,
+h3 {
+  font-family: 'Noto Sans TC', serif !important;
+}
+h4,
+h5,
+h6 {
+  font-family: Roboto, 'Noto Sans TC', sans-serif !important;
+  font-weight: 500;
+}
+.typeset h4,
+.typeset h5,
+.typeset h6 {
+  font-family: Roboto, 'Noto Sans TC', sans-serif !important;
+  font-weight: 500;
+}
+body .typeset,
+body,
+p {
+  font-family: Roboto, 'Noto Sans TC', sans-serif !important;
+}
+</style><style type="text/css">.pn {
+  display: inline-block;
+  font-weight: light;
+  font-size: 0.85em;
+  visibility: hidden;
+}
+.d-flex .card {
+  flex: 1 1 auto;
+  width: 45%;
+}
+.index .item {
+  width: 50%;
+  margin-bottom: 1.5em;
+  display: flex;
+}
+.index .item:before {
+  content: "\f00f";
+  font-family: ldi;
+  display: block;
+  margin-right: 0.5em;
+}
+.index .item h5 {
+  margin-bottom: 0;
+}
+</style><style type="text/css">body { overflow: auto}
+#scrollspy-nav .nav-link { padding: 1px 1rem; margin: 0 0 1px }
+#scrollspy-nav > nav nav { margin-left: 20px; display: none;}
+#scrollspy-nav > nav a.active + nav { display: flex;}
+.main-frame { display: flex; width: 100%; }
+.content { flex: 1 1 auto; max-width: 100%; padding-right: 2em }
+.page {
+  margin: 2em 0 5em;
+}
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  html, body { width: 210mm; height: 297mm; }
+  .page {
+    page-break-after: always;
+    page-break-before: always;
+    padding: 15mm;
+    background: #fff;
+  }
+  .root { width: 100%!important }
+}
+</style></head><body class="ld-over-full-inverse" data-spy="scroll" data-target="#scrollspy-nav"><div class="ld ld-spin ld-spinner"></div><script type="text/javascript" src="/js/pack/base.min.js"></script><div class="ldNotify"></div><div class="root w-1024 mx-auto rwd typeset heading-contrast"><div class="main-frame"><div class="content" data-spy="scroll" data-target="#scrollspy-nav" style="overflow-y:auto;"><div class="page"><h1>介面設計參考文件</h1><p class="text-muted">徵件評選系統平台之頁面、元件與互動等介面設計參考</p><hr><h2 id="overview">介面概觀</h2><p>依功能面向區分，徵件評選系統平台分為以下五個子系統：</p><ul><li><b>評選系統</b> - 統整評選相關事項。</li><li><b>管理系統</b> - 控制活動資訊、權限等設定。</li><li><b>提案系統</b> - 瀏覽、建立、編輯與管理提案。</li><li><b>用戶系統</b> - 用戶資訊管理與訊息通知。</li><li><b>頁面系統</b> - 設計並瀏覽活動各項資訊的公開頁面。</li></ul><h3 id="overview-judge">評選系統</h3><p>評選子系統統整評選相關事項，提供必要之元件以利評審、初審員與工作人員進行評選作業之協作。由於資訊較多，評選子系統多採試算表式表格設計，並採用類似 Google Spreadsheet 的<b>即時存檔</b>設計，不需另外存檔，以降低系統操作之複雜度。</p><p>同時，在評選會議時有多人討論跟即時修改的需求，因此實作時應支援<b>即時多人協作</b>，表單 ( 如評審總表 ) 可同時多人編輯，個人表之編輯亦會即時回饋至總表。</p><div class="pt-1 pb-4"></div><div class="index d-flex flex-wrap"><div class="item"><div><h5>評選表 <a class="pn" data-id="#judge-user"></a></h5><p>供各評審對提案評分使用</p></div></div><div class="item"><div><h5>評選總表 <a class="pn" data-id="#judge-all"></a></h5><p>匯整各評審評分表，供決選會議參考</p></div></div><div class="item"><div><h5>初審表 <a class="pn" data-id="#review-user"></a></h5><p>供工作人員審查提案資格與初步篩選提案用</p></div></div><div class="item"><div><h5>初審總表 <a class="pn" data-id="#review-all"></a></h5><p>匯整各初審表，供控管初審狀況</p></div></div><div class="item"><div><h5>獲選名單簽名板 <a class="pn" data-id="#judge-sign"></a></h5><p>供評審畫押版本的獲選名單</p></div></div><div class="item"><div><h5>獲選名單 <a class="pn" data-id="#judge-winner"></a></h5><p>公布用的獲選名單</p></div></div><div class="item"><div><h5>提案排名圖 <a class="pn" data-id="#judge-rank"></a></h5><p>依演算法決定之提案排名狀況</p></div></div><div class="item"><div><h5>初審資訊 <a class="pn" data-id="#judge-review"></a></h5><p>特定專案的初審資訊</p></div></div></div></div><div class="page" id="review-user"><h3>個人初審表</h3><img class="w-100 border rounded shadow-sm mb-4" src="/assets/img/design/report/page/review.png"><p>個人初審表主要用於提案初審階段。初審表列出所有提案，同時將提案內容並列供審核員參考。</p><ul><li>點擊提案名稱後，提案內容呈現於右方面板。</li><li>依照初審資格針對各個提案逐一審核，直接點擊狀態按鈕變更審核結果。</li><li>若有爭議或難以判別之項目，可跳過審核並在評論處提供細節資訊。</li><li>最左方匯整各別提案的審核通過狀況以及評論狀況。</li><li>點擊各個項目名稱欄可依各別欄位排序。</li><li>點擊審核條件連結彈出初審條件的細節描述，供審核員參考。</li></ul></div><div class="page" id="judge-user"><h3>個人評選表</h3><img class="w-100 border rounded shadow-sm mb-4" src="/assets/img/design/report/page/judge.png"><p>個人評選表為各個評審專用的評分表。評選表列出初審通過之提案，並依給分標準事先畫出指定欄位供評審使用。</p><ul><li>點擊提案名稱後，提案內容呈現於右方面板。</li><li>評審依照給分標準針對各個提案逐一評分，總分與排名依評分自動更新。</li><li>短評欄位依需求可做為評審加註使用，或者做為主辦單位參考用。</li><li>初審不通過之提案預設不顯示，但可點擊按鈕展開。</li><li>點擊各個項目名稱欄可依各別欄位排序。</li><li>以進度條提示評審剩餘進度，並可在完成時提交結果通知工作人員。</li></ul></div><div class="page" id="judge-all"><h3>評選總表</h3><img class="w-100 border rounded shadow-sm" src="/assets/img/design/report/page/judges.png"><p>評選總表為匯整各評審評分後的總表，提供各提案的整體評價，主要用於決定獲選名單使用。</p><ul><li>點擊提案名稱後，彈出該提案的評分細節，包含各初審員的評論、評審的給分以及評論。</li><li>各評審給分自動匯入，並自動計算各人排名與整體排名。</li><li>各別提案之最高 / 最低分評審以特別底色標示，以協助討論。</li><li>初審不通過之提案預設不顯示，但可點擊按鈕展開。</li><li>點擊各個項目名稱欄可依各別欄位排序。</li><li>點擊初審欄可查看初審員的評論。</li><li>評審確定決選名單後，在獲選欄位點擊註記。</li></ul></div><br></div><div class="menu"><nav class="navbar navbar-light bg-white border-left sticky" id="scrollspy-nav"><div class="navbar-brand">介面設計參考手冊</div><nav class="nav nav-pills flex-column"><a class="nav-link" href="#overview" data-scrollto="#overview">介面概觀</a><nav class="nav nav-pills flex-column"><a class="nav-link" href="#overview-judge" data-scrollto="#overview-judge">評選子系統</a><a class="nav-link" href="#overview-admin" data-scrollto="#overview-admin">管理子系統</a><a class="nav-link" href="#overview-page" data-scrollto="#overview-page">頁面子系統</a><a class="nav-link" href="#overview-propose" data-scrollto="#overview-propose">提案子系統</a><a class="nav-link" href="#overview-user" data-scrollto="#overview-user">用戶子系統</a></nav></nav></nav></div></div></div><script type="text/javascript" src="/js/pack/vendor.min.js"></script><script type="text/javascript" src="/assets/lib/flatpickr/flatpickr.min.js"></script><script type="text/javascript" src="/assets/xfl/xfl.js"></script><script>// Generated by LiveScript 1.3.0
+ld$.find('.page').map(function(d, i){
+  return d.idx = i + 1;
+});
+ld$.find('.pn').map(function(d, i){
+  var id, page, idx;
+  id = d.getAttribute('data-id');
+  page = ld$.find(id, 0);
+  if (!page) {
+    return;
+  }
+  idx = page.idx;
+  d.style.visibility = "visible";
+  d.setAttribute('href', id);
+  return d.innerText = "(p. " + idx + ")";
+});</script></body></html>

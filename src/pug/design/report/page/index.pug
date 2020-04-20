@@ -1,0 +1,228 @@
+extends /design/report/page/base.pug
+block vars
+  - ctrl.scrollspy = "#scrollspy-nav"
+block head
+
+  style(type="text/css"): :stylus
+    .pn
+      display: inline-block
+      font-weight: light
+      font-size: .85em
+      visibility: hidden
+    .d-flex .card { flex: 1 1 auto; width:45%; }
+    .index .item
+      width: 50%;
+      margin-bottom: 1.5em
+      display: flex
+      &:before
+        content: "\f00f"
+        font-family: ldi
+        display: block
+        margin-right: .5em
+      h5
+        margin-bottom: 0
+
+  style(type="text/css").
+    body { overflow: auto}
+    #scrollspy-nav .nav-link { padding: 1px 1rem; margin: 0 0 1px }
+    #scrollspy-nav > nav nav { margin-left: 20px; display: none;}
+    #scrollspy-nav > nav a.active + nav { display: flex;}
+    .main-frame { display: flex; width: 100%; }
+    .content { flex: 1 1 auto; max-width: 100%; padding-right: 2em }
+    .page {
+      margin: 2em 0 5em;
+    }
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    @media print {
+      html, body { width: 210mm; height: 297mm; }
+      .page {
+        page-break-after: always;
+        page-break-before: always;
+        padding: 15mm;
+        background: #fff;
+      }
+      .root { width: 100%!important }
+    }
+
+block body
+
+
+  .root.w-1024.mx-auto.rwd.typeset.heading-contrast
+    .main-frame
+      .content(data-spy="scroll",data-target="#scrollspy-nav",style="overflow-y:auto;")
+        .page
+
+          h1 介面設計參考文件
+          p.text-muted 徵件評選系統平台之頁面、元件與互動等介面設計參考
+          hr
+
+          h2#overview 介面概觀
+
+          p 依功能面向區分，徵件評選系統平台分為以下五個子系統：
+          ul
+            li #[b 評選系統] - 統整評選相關事項。
+            li #[b 管理系統] - 控制活動資訊、權限等設定。
+            li #[b 提案系統] - 瀏覽、建立、編輯與管理提案。
+            li #[b 用戶系統] - 用戶資訊管理與訊息通知。
+            li #[b 頁面系統] - 設計並瀏覽活動各項資訊的公開頁面。
+
+          h3#overview-judge 評選系統
+          p 評選子系統統整評選相關事項，提供必要之元件以利評審、初審員與工作人員進行評選作業之協作。由於資訊較多，評選子系統多採試算表式表格設計，並採用類似 Google Spreadsheet 的#[b 即時存檔]設計，不需另外存檔，以降低系統操作之複雜度。
+          p 同時，在評選會議時有多人討論跟即時修改的需求，因此實作時應支援#[b 即時多人協作]，表單 ( 如評審總表 ) 可同時多人編輯，個人表之編輯亦會即時回饋至總表。
+          .pt-1.pb-4
+
+          .index.d-flex.flex-wrap
+            .item: div
+              h5 評選表 #[a.pn(data-id="#judge-user")]
+              p 供各評審對提案評分使用
+            .item: div
+              h5 評選總表 #[a.pn(data-id="#judge-all")]
+              p 匯整各評審評分表，供決選會議參考
+            .item: div
+              h5 初審表 #[a.pn(data-id="#review-user")]
+              p 供工作人員審查提案資格與初步篩選提案用
+            .item: div
+              h5 初審總表 #[a.pn(data-id="#review-all")]
+              p 匯整各初審表，供控管初審狀況
+            .item: div
+              h5 獲選名單簽名板 #[a.pn(data-id="#judge-sign")]
+              p 供評審畫押版本的獲選名單
+            .item: div
+              h5 獲選名單 #[a.pn(data-id="#judge-winner")]
+              p 公布用的獲選名單
+            .item: div
+              h5 提案排名圖 #[a.pn(data-id="#judge-rank")]
+              p 依演算法決定之提案排名狀況
+            .item: div
+              h5 初審資訊 #[a.pn(data-id="#judge-review")]
+              p 特定專案的初審資訊
+
+        //-.page
+
+          h3#overview-admin 管理系統
+          p 管理子系統提供管理員設定活動進行之所有必要元件與資訊。
+          hr
+          .index.d-flex.flex-wrap
+            .item: div
+              h5 主控台
+              p 匯整管理資訊的主要入口。
+            .item: div
+              h5 活動階段元件
+              p 管理活動各時程的任務與權限。
+            .item: div
+              h5 權限元件
+              p 為各別帳號指派不同權限，例如評審、初審員、黑名單等。
+            .item: div
+              h5 提案表編輯器
+              p 設計提案表單的視覺化編輯器
+            .item: div
+              h5 初審資格編輯器
+              p 建立結構化初審資格資料，用於初審任務。
+
+          h3#overview-page 頁面系統
+          p 頁面子系統負責處理一般用戶可觸及的網頁，包含活動簡章、提案列表、常見問題等，並提供編輯功能。
+          hr
+          .index.d-flex.flex-wrap
+            .item: div
+              h5 選單編輯器
+              p 設定活動公開頁面的導覽列
+            .item: div
+              h5 頁面編輯器
+              p 設定活動公開頁面的導覽列
+            .item: div
+              h5 活動頁面範本
+              p 可供編輯的活動頁面範本
+
+          .page
+            h3#overview-propose 提案系統
+            p 提案子系統負責提案事項。
+            hr
+            .index.d-flex.flex-wrap
+              .item: div
+                h5 提案編輯頁面
+                p 可供編輯的活動頁面範本
+              .item: div
+                h5 提案瀏覽頁面
+                p 可供編輯的活動頁面範本
+
+            h3#overview-user 用戶系統
+            p 用戶系統提供針對用戶的個人化訊息。
+            hr
+            .index.d-flex.flex-wrap
+              .item: div
+                h5 用戶主頁 
+                p 供其它用戶參考的用戶個人資訊頁
+              .item: div
+                h5 個人入口
+                p 提供用戶資產清單 ( 如提案 ) 與訊息通知等資訊
+              .item: div
+                h5 個人設定
+                p 帳號、密碼等設定頁面。
+
+        #review-user.page
+          h3 個人初審表
+          img.w-100.border.rounded.shadow-sm.mb-4(src="/assets/img/design/report/page/review.png")
+          p 個人初審表主要用於提案初審階段。初審表列出所有提案，同時將提案內容並列供審核員參考。
+          ul
+            li 點擊提案名稱後，提案內容呈現於右方面板。
+            li 依照初審資格針對各個提案逐一審核，直接點擊狀態按鈕變更審核結果。
+            li 若有爭議或難以判別之項目，可跳過審核並在評論處提供細節資訊。
+            li 最左方匯整各別提案的審核通過狀況以及評論狀況。
+            li 點擊各個項目名稱欄可依各別欄位排序。
+            li 點擊審核條件連結彈出初審條件的細節描述，供審核員參考。
+
+        #judge-user.page
+          h3 個人評選表
+          img.w-100.border.rounded.shadow-sm.mb-4(src="/assets/img/design/report/page/judge.png")
+          p 個人評選表為各個評審專用的評分表。評選表列出初審通過之提案，並依給分標準事先畫出指定欄位供評審使用。
+          ul
+            li 點擊提案名稱後，提案內容呈現於右方面板。
+            li 評審依照給分標準針對各個提案逐一評分，總分與排名依評分自動更新。
+            li 短評欄位依需求可做為評審加註使用，或者做為主辦單位參考用。
+            li 初審不通過之提案預設不顯示，但可點擊按鈕展開。
+            li 點擊各個項目名稱欄可依各別欄位排序。
+            li 以進度條提示評審剩餘進度，並可在完成時提交結果通知工作人員。
+
+        #judge-all.page
+          h3 評選總表
+          img.w-100.border.rounded.shadow-sm(src="/assets/img/design/report/page/judges.png")
+          p 評選總表為匯整各評審評分後的總表，提供各提案的整體評價，主要用於決定獲選名單使用。
+          ul
+            li 點擊提案名稱後，彈出該提案的評分細節，包含各初審員的評論、評審的給分以及評論。
+            li 各評審給分自動匯入，並自動計算各人排名與整體排名。
+            li 各別提案之最高 / 最低分評審以特別底色標示，以協助討論。
+            li 初審不通過之提案預設不顯示，但可點擊按鈕展開。
+            li 點擊各個項目名稱欄可依各別欄位排序。
+            li 點擊初審欄可查看初審員的評論。
+            li 評審確定決選名單後，在獲選欄位點擊註記。
+
+        br
+      .menu
+
+        nav#scrollspy-nav.navbar.navbar-light.bg-white.border-left.sticky
+          .navbar-brand 介面設計參考手冊
+          nav.nav.nav-pills.flex-column
+            a.nav-link(href="#overview",data-scrollto="#overview") 介面概觀
+
+            nav.nav.nav-pills.flex-column
+              a.nav-link(href="#overview-judge",data-scrollto="#overview-judge") 評選子系統
+              a.nav-link(href="#overview-admin",data-scrollto="#overview-admin") 管理子系統
+              a.nav-link(href="#overview-page",data-scrollto="#overview-page") 頁面子系統
+              a.nav-link(href="#overview-propose",data-scrollto="#overview-propose") 提案子系統
+              a.nav-link(href="#overview-user",data-scrollto="#overview-user") 用戶子系統
+block script
+  script: :lsc
+    ld$.find '.page' .map (d,i) -> d.idx = (i + 1)
+    ld$.find '.pn' .map (d,i) ->
+      id = d.getAttribute(\data-id)
+      page = ld$.find(id,0)
+      if !page => return
+      idx = page.idx
+      d.style.visibility = "visible"
+      d.setAttribute \href, id
+      d.innerText = "(p. #{idx})"
+
+
