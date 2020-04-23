@@ -1,4 +1,4 @@
-require! <[fs fs-extra crypto express-rate-limit]>
+require! <[fs fs-extra crypto express-rate-limit lderror]>
 require! <[../../aux ../util/mail]>
 (engine,io) <- (->module.exports = it)  _
 
@@ -27,11 +27,10 @@ engine.app.get \/me/mail/verify/:token, (req, res) ->
     .then (r={})->
       if !r.[]rows.length => return aux.reject 403, ""
       local.obj = obj = r.rows.0
-      if new Date!getTime! - new Date(obj.time).getTime! > 1000 * 600 =>
-        res.redirect \/auth/mail/verify/expire/
-        return null
       io.query "delete from mailverifytoken where owner = $1", [obj.owner]
     .then ->
+      if new Date!getTime! - new Date(local.obj.time).getTime! > 1000 * 600 =>
+        return Promise.reject(new lderror(1013))
       verified = {date: Date.now!}
       io.query "update users set verified = $2 where key = $1", [local.obj.owner, JSON.stringify(verified)]
       if req.user =>
@@ -41,4 +40,8 @@ engine.app.get \/me/mail/verify/:token, (req, res) ->
     .then ->
       res.redirect \/auth/mail/verify/done/
       return null
-    .catch aux.error-handler res, true
+    .catch (e) ->
+      if (e instanceof lderror) and e.id == 1013 =>
+        res.redirect \/auth/mail/verify/expire/
+        return null
+      else aux.error-handler(res, true) e

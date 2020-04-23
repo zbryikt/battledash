@@ -1,0 +1,119 @@
+extends /base.pug
+block vars
+  - ctrl.navtop.placeholder = true;
+  - ctrl.navtop.shown = true;
+  - view = true;
+  include /design/data/sample.pug
+block head
+  style(type="text/css"): :stylus
+    .check .info
+      border-right: 1px solid #999
+      padding: 1em
+      position: relative
+      text-align: right
+    .check .info:before
+      content: " "
+      display: block
+      width: 1em
+      height: 1em
+      border-radius: 50%
+      background: #999
+      position: absolute
+      right: -.5em
+      top: 1.5em
+      margin: auto
+    .check .detail
+      padding: 1em
+      margin: 0 0 2em 1em
+
+block body
+  include /design/mixins/index.pug
+  .w-1024.rwd.mx-auto
+    .py-4.mb-4.d-flex.align-items-center.justify-content-center
+      div
+        h3 超級義手計劃
+        .text-muted 好妙手工作室股份有限公司
+      //-div
+        .btn.btn-outline-secondary 聯絡團隊
+
+
+    .navbar.navbar-expand-lg.navbar-light.mb-4.border.shadow-sm.rounded.sticky.z-fixed.bg-white(style="top:55px")
+      .collapse.navbar-collapse
+        ul.nav.nav-pills.mr-auto(ld="tabbar")
+          li.nav-item: a.nav-link.active(ld="tabbar-tab default",data-name="basic") 基本資訊
+          li.nav-item: a.nav-link(ld="tabbar-tab",data-name="track") 專案追蹤
+          li.nav-item: a.nav-link(ld="tabbar-tab",data-name="budget") 經費表
+          li.nav-item: a.nav-link(ld="tabbar-tab",data-name="detail") 提案細節
+        ul.navbar-nav.ml-auto
+          li.nav-item: a.nav-link(href="/org/dashboard.html") 專案列表
+    .mb-4.ld.ld-float-btt-in.xhalf(ld="tabbar-panel",data-name="basic")
+      .card-body: .p-4
+
+        .check.d-flex
+          .info
+            .text-lg.font-weight-bold 附註
+            .text-muted 2020/04/20
+          .detail.flex-grow-1
+            .d-flex
+              h5.mb-3.flex-grow-1 團隊面談
+            textarea.form-control(rows="5")
+            .mt-2.d-flex.align-items-center
+              .text-sm.mr-2.mb-2: b 附件
+              each i in [1,2,3]
+                .btn.btn-sm.btn-secondary.mr-2.mb-2 #[i.i-link] demo.pdf #[span.text-sm ( 168KB )]
+
+        .check.d-flex
+          .info
+            .text-lg.font-weight-bold 查核
+            .text-muted 2020/04/20
+          .detail.flex-grow-1
+            .d-flex
+              h5.mb-3.flex-grow-1 期中查核
+              div
+                .dropdown
+                  .btn.btn-sm.btn-outline-dark.dropdown-toggle(data-toggle="dropdown") 查核結果...
+                  .dropdown-menu.dropdown-menu-right
+                    a.dropdown-item.d-flex.justify-content-between(href="#") #[span 通過] #[i.i-check.text-success]
+                    a.dropdown-item.d-flex.justify-content-between(href="#") #[span 有條件驗收] #[i.i-circle.text-warning]
+                    a.dropdown-item.d-flex.justify-content-between(href="#") #[span 未通過] #[i.i-close.text-danger]
+            textarea.form-control(rows="5")
+            .mt-2.d-flex.align-items-center
+              .text-sm.mr-2.mb-2: b 附件
+              each i in [1,2,3]
+                .btn.btn-sm.btn-secondary.mr-2.mb-2 #[i.i-link] demo.pdf #[span.text-sm ( 168KB )]
+
+        .check.d-flex
+          .info
+            .text-lg.font-weight-bold 核銷
+            .text-muted 2020/04/20
+          .detail.flex-grow-1
+            h5 經費核銷
+            hr
+
+            .d-flex.justify-content-between.align-items-center
+              .form-group.mr-2
+                div 金額
+                input.form-control
+              span.mx-2 &#x2264;
+              .form-group.mx-2
+                div 餘額
+                input.form-control(readonly,value="150")
+              span.mx-2 =
+              .form-group.mx-2
+                div 執行預算
+                input.form-control(readonly,value="500")
+              span.mx-2 &times;
+              .form-group.mx-2
+                div 補助率
+                input.form-control(readonly,value="50%")
+              span.mx-2 &#x2212;
+              .form-group.ml-2
+                div 已核銷金額
+                input.form-control(readonly,value="100")
+            .text-danger 依您所填入的金額計算，總核銷金額將超出計劃總補助 20 元。
+
+
+
+
+
+
